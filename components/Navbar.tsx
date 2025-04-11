@@ -37,7 +37,7 @@ export default function Navbar() {
 
             {/* Page Title */}
             <h1 className="hidden text-base font-extrabold lg:text-2xl md:block text-[#343C6A]">
-                Command Desk - {getPageTitle()}
+                {getPageTitle()}
             </h1>
 
             {/* Menu Section */}
