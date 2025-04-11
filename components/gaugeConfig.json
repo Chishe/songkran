@@ -1,0 +1,19 @@
+{
+    "minValue": 0,
+    "maxValue": 1,
+    "initialValue": 0.22,
+    "color": "#ddd",
+    "trackColor": "#00f2fe",
+    "needleColor": "#ff0000",
+    "backgroundColor": "#ffffff",
+    "gaugeWidth": 20,
+    "size": {
+      "width": 256,
+      "height": 128
+    },
+    "animation": {
+      "duration": 500,
+      "ease": "ease"
+    }
+  }
+  
