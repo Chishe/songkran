@@ -22,7 +22,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="w-full px-6 py-4 bg-[#0b0153] border-b border-gray-200 flex items-center justify-between">
+        <nav className="fixed top-0 left-0 w-full z-10 px-6 py-4 bg-[#0b0153] border-b border-gray-200 flex items-center justify-between">
             {/* Logo Section */}
             <div className="h-12 w-36 lg:w-48 lg:h-10">
                 <Image
