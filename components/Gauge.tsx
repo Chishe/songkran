@@ -18,7 +18,7 @@ export default function Gauge() {
   }, [angle]);
 
   return (
-    <div className="relative mx-auto" style={{ width: gaugeConfig.size.width, height: gaugeConfig.size.height }}>
+    <div className="relative mx-auto w-1/2 h-1/2 flex flex-col justify-center items-center">
       <svg width="100%" height="100%" viewBox="0 0 200 100">
         <path
           d="M10 100 A90 90 0 0 1 190 100"
@@ -41,18 +41,21 @@ export default function Gauge() {
         className="absolute left-1/2 bottom-0 origin-bottom"
         style={{
           width: '4px',
-          height: '112px',
+          height: '56px',
           backgroundColor: gaugeConfig.needleColor,
           transform: `rotate(${angle}deg)`,
-          transition: `transform ${gaugeConfig.animation.duration}ms ${gaugeConfig.animation.ease}`
+          transition: `transform ${gaugeConfig.animation.duration}ms ${gaugeConfig.animation.ease}`,
         }}
       ></div>
 
       <div className="absolute left-1/2 bottom-0 w-4 h-4 bg-black rounded-full -translate-x-1/2 translate-y-1/2 z-10" />
 
+      {/* แสดงค่าต่ำสุดและสูงสุด */}
       <div className="absolute left-0 bottom-0 text-sm text-gray-600">{gaugeConfig.minValue}</div>
       <div className="absolute right-0 bottom-0 text-sm text-gray-600">{maxItem.toFixed(1)}</div>
-      <div className="text-center mt-4 text-xl font-bold">{ItemRate.toFixed(2)} l/min</div>
+
+      {/* ข้อความแสดงค่าตัวเอง */}
+      <div className="text-center mt-8 text-xl font-bold">{ItemRate.toFixed(2)} l/min</div>
     </div>
   );
 }

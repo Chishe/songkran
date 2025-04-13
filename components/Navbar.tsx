@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaHome } from "react-icons/fa";
 import { FaPhoneVolume } from "react-icons/fa6";
+
 export default function Navbar() {
     const pathname = usePathname();
 
@@ -21,8 +22,11 @@ export default function Navbar() {
         }
     };
 
+    const getLinkClass = (path: string) =>
+        `hover:underline ${pathname === path ? 'text-red-500 font-bold' : ''}`;
+
     return (
-        <nav className="fixed top-0 left-0 w-full z-10 px-6 py-4 bg-[#0b0153] border-b border-gray-200 flex items-center justify-between">
+        <nav className="fixed top-0 left-0 w-full z-15 px-6 py-4 bg-[#0b0153] border-b border-gray-200 flex items-center justify-between">
             {/* Logo Section */}
             <div className="h-12 w-36 lg:w-48 lg:h-10">
                 <Image
@@ -44,15 +48,15 @@ export default function Navbar() {
             <ul className="flex flex-col gap-2 text-foreground">
                 <div className="flex gap-4">
                     <li><Link href="#" className="hover:underline">Over detail</Link></li>
-                    <li><Link href="/quality-result" className="hover:underline">Quality result</Link></li>
-                    <li><Link href="/document-record" className="hover:underline">Document record</Link></li>
+                    <li><Link href="/quality-result" className={getLinkClass("/quality-result")}>Quality result</Link></li>
+                    <li><Link href="/document-record" className={getLinkClass("/document-record")}>Document record</Link></li>
                     <li><Link href="#" className="hover:underline">Video record</Link></li>
                 </div>
                 <div className="flex gap-4">
                     <li><Link href="#" className="hover:underline">Production</Link></li>
                     <li><Link href="#" className="hover:underline">Maintenance</Link></li>
-                    <li><Link href="/machine-condition" className="hover:underline">Machine condition</Link></li>
-                    <li><Link href="/history-problem" className="hover:underline">History problem</Link></li>
+                    <li><Link href="/" className={getLinkClass("/")}>Machine condition</Link></li>
+                    <li><Link href="/history-problem" className={getLinkClass("/history-problem")}>History problem</Link></li>
                 </div>
             </ul>
 

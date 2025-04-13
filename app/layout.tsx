@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Next App",
+  title: "My Songkran App",
   description: "Generated with Next.js + Tailwind CSS",
 };
 
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        <main className="p-4">{children}</main>
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );

@@ -2,14 +2,28 @@
 import React, { useEffect, useState } from "react";
 import { FaCircle } from "react-icons/fa";
 
+type HistoryItem = {
+    id: string;
+    date: string;
+    time: string;
+    item: string;
+    min: number;
+    max: number;
+    actual: number;
+    status: string;
+};
+
 export default function HistoryProblem() {
-    const [history, setHistory] = useState([]);
+    const [history, setHistory] = useState<HistoryItem[]>([]);
 
     useEffect(() => {
         fetch('http://localhost:3000/api/history-problem')
             .then((res) => res.json())
-            .then(setHistory);
+            .then((data: HistoryItem[]) => setHistory(data))
+            .catch((err) => console.error("Failed to load history:", err));
     }, []);
+
+
 
     return (
         <div className="p-4 h-[86vh] mt-24">
@@ -35,11 +49,10 @@ export default function HistoryProblem() {
                         {history.map((item, index) => (
                             <tr
                                 key={item.id}
-                                className={`${
-                                    index === history.length - 1
-                                        ? "border-b border-[#CCCCFF]"
-                                        : ""
-                                }`}
+                                className={`${index === history.length - 1
+                                    ? "border-b border-[#CCCCFF]"
+                                    : ""
+                                    }`}
                             >
                                 <td className="py-2 px-4 text-center">{item.date}</td>
                                 <td className="py-2 px-4 text-center">{item.time}</td>

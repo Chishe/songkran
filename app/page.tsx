@@ -1,12 +1,11 @@
 import History from "@/components/History";
-import Gauge from "@/components/Gauge";
-import Line from "@/components/Line";
+import MCcondition from "@/components/MCcondition";
+
 export default function Home() {
   return (
-   <div className="h-full">
-    <History/>
-    <Line/>
-    <Gauge/>
-   </div>
+    <div className="h-screen flex gap-4">
+        <History />
+        <MCcondition />
+    </div>
   );
 }
