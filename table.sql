@@ -183,6 +183,35 @@ VALUES
   ('Tension adjust press', 0.20, '11.09'),
   ('Tension adjust press', 0.20, '11.10');
 
+CREATE TABLE Threshold (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  min DOUBLE PRECISION NOT NULL,
+  max DOUBLE PRECISION NOT NULL,
+  color VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO Threshold (item, min, max, color)
+VALUES 
+ ('After cut air blow 1', 0.18, 0.28,'#ffc000'),
+ ('After cut air blow 2', 0.18, 0.28,'#93ff93'),
+ ('Twist cut air blow 1', 0.18, 0.28,'#7575d1'),
+ ('Twist cut air blow 2', 0.18, 0.28,'#00b0ef'),
+ ('Tension pressure', 0.18, 0.28,'#ff66cc'),
+ ('Tension adjust press', 0.18, 0.28,'#ffffcc'),
+ ('TG222310-8750', 0.18, 0.28, '#ffc000'),
+ ('TG233310-1880', 0.18, 0.28, '#93ff93'),
+ ('TG222310-9320', 0.18, 0.28, '#7575d1'),
+ ('TG222310-9350', 0.18, 0.28, '#00b0ef'),
+ ('TG222310-9650', 0.18, 0.28, '#ff66cc'),
+ ('TG222310-9710', 0.18, 0.28, '#ffffcc'),
+ ('TG222310-9110', 0.18, 0.28, '#00b0ef'),
+ ('TG233310-9730', 0.18, 0.28, '#99d266'),
+ ('TG222310-9970', 0.18, 0.28, '#969696'),
+ ('TG233310-0090', 0.18, 0.28, '#ffffff');
+
+
 CREATE TABLE conditionfin (
   id SERIAL PRIMARY KEY,
   date DATE NOT NULL,
@@ -192,6 +221,8 @@ CREATE TABLE conditionfin (
   mcs DOUBLE PRECISION NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
+
+
 INSERT INTO conditionfin (date, time, item, ots, mcs)
 VALUES ('2023-07-08', '11:02', 'TG222310-8750', 5.02, 5.12),
 ('2023-07-08', '11:02', 'TG233310-1880', 5.02, 5.12),

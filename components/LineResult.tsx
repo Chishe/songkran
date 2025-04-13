@@ -25,24 +25,16 @@ ChartJS.register(
   Filler
 );
 
-const colorMap: { [key: string]: string } = {
-  'TG222310-8750': '#ffc000',
-  'TG233310-1880': '#93ff93',
-  'TG222310-9320': '#7575d1',
-  'TG222310-9350': '#00b0ef',
-  'TG222310-9650': '#ff66cc',
-  'TG222310-9710': '#ffffcc',
-  'TG222310-9110': '#00b0ef',
-  'TG233310-9730': '#99d266',
-  'TG222310-9970': '#969696',
-  'TG233310-0090': '#ffffff',
-};
-
 export default function Line({ url }: { url: string }) {
   const [itemValues, setItemValues] = useState<number[]>([]);
   const [timeStamps, setTimeStamps] = useState<string[]>([]);
   const [itemName, setItemName] = useState<string>('');
+  const [pointColor, setPointColor] = useState<string>('#00f2fe'); // Default fallback
 
+  const minThreshold = 0.18;
+  const maxThreshold = 0.28;
+
+  // Fetch chart data
   useEffect(() => {
     fetch(url)
       .then(res => res.json())
@@ -50,14 +42,23 @@ export default function Line({ url }: { url: string }) {
         const reversed = [...data].reverse();
         setItemValues(reversed.map((d: any) => parseFloat(d.item)));
         setTimeStamps(reversed.map((d: any) => d.time));
-        setItemName(reversed[0]?.itemname || '');
+        const currentItem = reversed[0]?.itemname || '';
+        setItemName(currentItem);
+
+        // Fetch threshold color for this item
+        fetch('/api/threshold')
+          .then(res => res.json())
+          .then(thresholds => {
+            const threshold = thresholds.find((t: any) => t.item === currentItem);
+            if (threshold) {
+              setPointColor(threshold.color);
+            }
+          })
+          .catch(err => {
+            console.error('Failed to fetch thresholds:', err);
+          });
       });
   }, [url]);
-
-  const pointColor = colorMap[itemName] || '#00f2fe';
-
-  const minThreshold = 0.18;
-  const maxThreshold = 0.28;
 
   const data = {
     labels: timeStamps,
