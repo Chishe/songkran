@@ -11,14 +11,14 @@ export default function Navbar() {
 
     const getPageTitle = () => {
         switch (pathname) {
-            case "/quality-result":
-                return "Quality result";
+            case "/machine-condition":
+                return "Machine condition";
             case "/document-record":
                 return "Document record";
             case "/history-problem":
                 return "History problem";
             default:
-                return "Machine condition";
+                return "Quality result";
         }
     };
 
@@ -47,15 +47,15 @@ export default function Navbar() {
             {/* Menu Section */}
             <ul className="flex flex-col gap-2 text-foreground">
                 <div className="flex gap-4">
-                    <li><Link href="#" className="hover:underline">Over detail</Link></li>
-                    <li><Link href="/quality-result" className={getLinkClass("/quality-result")}>Quality result</Link></li>
+                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Over detail</Link></li>
+                    <li><Link href="/" className={getLinkClass("/")}>Quality result</Link></li>
                     <li><Link href="/document-record" className={getLinkClass("/document-record")}>Document record</Link></li>
-                    <li><Link href="#" className="hover:underline">Video record</Link></li>
+                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Video record</Link></li>
                 </div>
                 <div className="flex gap-4">
-                    <li><Link href="#" className="hover:underline">Production</Link></li>
-                    <li><Link href="#" className="hover:underline">Maintenance</Link></li>
-                    <li><Link href="/" className={getLinkClass("/")}>Machine condition</Link></li>
+                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Production</Link></li>
+                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Maintenance</Link></li>
+                    <li><Link href="/machine-condition" className={getLinkClass("/machine-condition")}>Machine condition</Link></li>
                     <li><Link href="/history-problem" className={getLinkClass("/history-problem")}>History problem</Link></li>
                 </div>
             </ul>

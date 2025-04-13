@@ -26,12 +26,16 @@ ChartJS.register(
 );
 
 const colorMap: { [key: string]: string } = {
-  'After cut air blow 1': '#ffc000',
-  'After cut air blow 2': '#93ff93',
-  'Twist cut air blow 1': '#7575d1',
-  'Twist cut air blow 2': '#00b0ef',
-  'Tension pressure': '#ff66cc',
-  'Tension adjust press': '#ffffcc'
+  'TG222310-8750': '#ffc000',
+  'TG233310-1880': '#93ff93',
+  'TG222310-9320': '#7575d1',
+  'TG222310-9350': '#00b0ef',
+  'TG222310-9650': '#ff66cc',
+  'TG222310-9710': '#ffffcc',
+  'TG222310-9110': '#00b0ef',
+  'TG233310-9730': '#99d266',
+  'TG222310-9970': '#969696',
+  'TG233310-0090': '#ffffff',
 };
 
 export default function Line({ url }: { url: string }) {

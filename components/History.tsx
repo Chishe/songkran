@@ -27,19 +27,19 @@ export default function History() {
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr className="text-yellow-300">
-            <th className="py-2 px-4 text-center">Date</th>
-            <th className="py-2 px-4 text-center">Time</th>
-            <th className="py-2 px-4 text-center">Item</th>
-            <th className="py-2 px-4 text-center">Status</th>
+            <th className="py-2 px-4 text-center whitespace-nowrap">Date</th>
+            <th className="py-2 px-4 text-center whitespace-nowrap">Time</th>
+            <th className="py-2 px-4 text-center whitespace-nowrap">Item</th>
+            <th className="py-2 px-4 text-center whitespace-nowrap">Status</th>
           </tr>
         </thead>
         <tbody>
           {historyData.map((item) => (
             <tr key={item.id}>
-              <td className="py-2 px-4">{item.date}</td>
-              <td className="py-2 px-4">{item.time}</td>
-              <td className="py-2 px-4">{item.item}</td>
-              <td className="py-2 px-4">
+              <td className="py-2 px-4 whitespace-nowrap">{item.date}</td>
+              <td className="py-2 px-4 whitespace-nowrap">{item.time}</td>
+              <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
+              <td className="py-2 px-4 whitespace-nowrap">
                 {item.status === "NG" ? (
                   <FaCircle className="text-red-500" />
                 ) : (
@@ -51,5 +51,6 @@ export default function History() {
         </tbody>
       </table>
     </div>
+
   );
 }

@@ -24,7 +24,7 @@ export default function MCcondition() {
     }, []);
 
     return (
-        <div className="mt-23 h-[50vh] w-full overflow-y-auto
+        <div className="mt-23 h-[90vh] w-full overflow-y-auto
     [&::-webkit-scrollbar]:w-1 
                [&::-webkit-scrollbar-track]:bg-gray-100 
                [&::-webkit-scrollbar-thumb]:bg-gray-300 
@@ -45,10 +45,10 @@ export default function MCcondition() {
                 <tbody>
                     {mcData.map((item) => (
                         <tr key={item.id} className="border-2">
-                            <td className="py-2 px-4">{item.date}</td>
-                            <td className="py-2 px-4">{item.time}</td>
-                            <td className="py-2 px-4">{item.item}</td>
-                            <td className="py-2 px-4"> <Line url={
+                            <td className="py-2 px-4 whitespace-nowrap">{item.date}</td>
+                            <td className="py-2 px-4 whitespace-nowrap">{item.time}</td>
+                            <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
+                            <td className="py-2 px-4 whitespace-nowrap"> <Line url={
                                 item.item === "After cut air blow 1" ? "http://localhost:3000/api/after-cut-1" :
                                     item.item === "After cut air blow 2" ? "http://localhost:3000/api/after-cut-2" :
                                         item.item === "Twist cut air blow 1" ? "http://localhost:3000/api/twist-cut-1" :
