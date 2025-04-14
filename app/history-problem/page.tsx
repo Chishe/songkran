@@ -59,7 +59,13 @@ export default function HistoryProblem() {
                                 <td className="py-2 px-4 text-center">{item.item}</td>
                                 <td className="py-2 px-4 text-center">{item.min}</td>
                                 <td className="py-2 px-4 text-center">{item.max}</td>
-                                <td className="py-2 px-4 text-center">{item.actual}</td>
+                                <td
+                                    className={`py-2 px-4 text-center ${item.actual < item.min || item.actual > item.max ? 'text-red-500' : ''
+                                        }`}
+                                >
+                                    {item.actual}
+                                </td>
+
                                 <td className="py-2 px-4 flex justify-center items-center">
                                     {item.status === "NG" ? (
                                         <FaCircle className="text-red-500" />

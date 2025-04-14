@@ -22,7 +22,7 @@ export default function History() {
   }, []);
 
   return (
-    <div className="mt-23 p-4 border-4 border-[#0070C0]">
+    <div className="mt-23 p-4 border-3 border-[#0070C0]">
       <h2 className="text-xl font-bold mb-4">History:</h2>
       <table className="min-w-full table-auto border-collapse">
         <thead>
@@ -41,9 +41,9 @@ export default function History() {
               <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
               <td className="py-2 px-4 whitespace-nowrap">
                 {item.status === "NG" ? (
-                  <FaCircle className="text-red-500" />
+                  <FaCircle className="text-red-500 text-center" />
                 ) : (
-                  <FaCircle className="text-green-500" />
+                  <FaCircle className="text-green-500 text-center" />
                 )}
               </td>
             </tr>

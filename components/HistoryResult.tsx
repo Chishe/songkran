@@ -22,7 +22,7 @@ export default function HistoryResult() {
     }, []);
 
     return (
-        <div className="mt-23 p-4 border-4 border-[#0070C0]">
+        <div className="mt-23 p-4 border-3 border-[#0070C0]">
             <h2 className="text-xl font-bold mb-4">History:</h2>
             <table className="min-w-full table-auto border-collapse">
                 <thead>

@@ -59,17 +59,17 @@ export default function Fincondition() {
       <table className="min-w-full table-auto border-collapse">
         <thead>
           <tr className="border-2">
-            <th className="py-2 px-4 text-center">Date</th>
-            <th className="py-2 px-4 text-center">Time</th>
-            <th className="py-2 px-4 text-center">Item</th>
-            <th className="py-2 px-4 text-center">Graph</th>
-            <th className="py-2 px-4 text-center" colSpan={2}>Latest</th>
-            <th className="py-2 px-4 text-center">Status</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Date</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Time</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Item</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Graph</th>
+            <th className="py-2 px-4 text-center text-yellow-300" colSpan={2}>Latest</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Status</th>
           </tr>
           <tr className="border-2">
             <th colSpan={4}></th>
-            <th className="py-2 px-4 text-center">Operation side</th>
-            <th className="py-2 px-4 text-center">Machine side</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Operation side</th>
+            <th className="py-2 px-4 text-center text-yellow-300">Machine side</th>
             <th></th>
           </tr>
         </thead>
@@ -92,7 +92,7 @@ export default function Fincondition() {
                 <td className={`py-2 px-4 text-center ${textColorClass}`}>
                   {item.mcs}
                 </td>
-                <td className="py-2 px-4 text-center">
+                <td className="pl-6 px-4 text-center">
                   <FaCircle className={isNG ? "text-red-500" : "text-green-500"} />
                 </td>
               </tr>
