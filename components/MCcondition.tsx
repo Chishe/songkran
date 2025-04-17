@@ -75,7 +75,7 @@ export default function MCcondition() {
                                 } />
                             </td>
                             <td className="py-2 px-4">
-                                <ActualGauge url={`http://localhost:3000/api/needle-value/${encodeURIComponent(item.item)}`} />
+                                <ActualGauge url={`http://localhost:3000/api/gauge-set/${encodeURIComponent(item.item)}`} />
                             </td>
                             <td className="py-2 px-4">
                                 {statusData[item.item] === 1 ? (

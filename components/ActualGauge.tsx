@@ -11,8 +11,10 @@ type Props = {
 };
 
 const ActualGauge = ({ url }: Props) => {
-  const [value, setValue] = useState(0);
   const [needleValue, setNeedleValue] = useState(0);
+  const [rangeMin, setRangeMin] = useState(0);
+  const [rangeMax, setRangeMax] = useState(1);
+  const [actualRange, setActualRange] = useState<[number, number]>([0, 0]);
   const [color, setColor] = useState('#4BC0C0');
 
   useEffect(() => {
@@ -20,8 +22,19 @@ const ActualGauge = ({ url }: Props) => {
       try {
         const res = await fetch(url);
         const data = await res.json();
-        setValue(Math.min(1, Math.max(0, data.actual)));
-        setNeedleValue(Math.min(1, Math.max(0, data.needle)));
+
+        const min = data.rang?.[0] ?? 0;
+        const max = data.rang?.[1] ?? 1;
+        setRangeMin(min);
+        setRangeMax(max);
+
+        if (Array.isArray(data.actual) && data.actual.length === 2) {
+          setActualRange([data.actual[0], data.actual[1]]);
+        }
+
+        const needle = typeof data.needle === 'number' ? data.needle : 0;
+        setNeedleValue(Math.min(max, Math.max(min, needle)));
+
         setColor(data.color || '#4BC0C0');
       } catch (error) {
         console.error('Error fetching gauge data:', error);
@@ -30,12 +43,17 @@ const ActualGauge = ({ url }: Props) => {
 
     fetchData();
 
-    // Optional: refresh every 5 seconds
     const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, [url]);
 
-  const angleDeg = 180 * needleValue;
+  const totalRange = rangeMax - rangeMin;
+  const start = (actualRange[0] - rangeMin) / totalRange;
+  const highlight = (actualRange[1] - actualRange[0]) / totalRange;
+  const end = 1 - start - highlight;
+
+  const normalizedNeedle = (needleValue - rangeMin) / totalRange;
+  const angleDeg = 180 * normalizedNeedle;
   const angleRad = (angleDeg * Math.PI) / 180;
 
   const needleLength = 60;
@@ -48,8 +66,8 @@ const ActualGauge = ({ url }: Props) => {
   const data = {
     datasets: [
       {
-        data: [value, 1 - value],
-        backgroundColor: [color, '#E0E0E0'],
+        data: [start, highlight, end],
+        backgroundColor: ['#E0E0E0', color, '#E0E0E0'],
         borderWidth: 0,
         circumference: 180,
         rotation: 270,
@@ -71,7 +89,6 @@ const ActualGauge = ({ url }: Props) => {
     <div className="relative w-full max-w-[160px] aspect-[2/1]">
       <Doughnut data={data} options={options} />
 
-      {/* เข็ม */}
       <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <line
           x1={centerX}
@@ -84,15 +101,22 @@ const ActualGauge = ({ url }: Props) => {
         <circle cx={centerX} cy={centerY} r="4" fill="red" />
       </svg>
 
-      {/* ตัวเลข */}
       <div className="absolute top-[77%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-base font-bold">
-        {value.toFixed(2)}
+        {needleValue.toFixed(2)}
       </div>
 
-      {/* หน่วย */}
       <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-sm text-white">
         L/min
       </div>
+
+      <div className="absolute bottom-2 left-4 text-sm text-white">
+        {rangeMin}
+      </div>
+
+      <div className="absolute bottom-2 right-4 text-sm text-white">
+        {rangeMax}
+      </div>
+
     </div>
   );
 };

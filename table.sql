@@ -26,22 +26,39 @@ CREATE TABLE weights (
 );
 
 
-CREATE TABLE needleValue (
+CREATE TABLE gaugeset (
   id SERIAL PRIMARY KEY,
   itemname TEXT,
-  needle FLOAT,
-  actual FLOAT,
+  rang FLOAT[],
   color TEXT,
   created_at TIMESTAMP DEFAULT now()
 );
-INSERT INTO needleValue (itemname, needle, actual, color, created_at)
+
+INSERT INTO gaugeset (itemname, rang, color, created_at)
 VALUES
-  ('After cut air blow 1', 0.1, 0.4, '#ffc000', NOW()),
-  ('After cut air blow 2', 0.1, 0.4, '#93ff93', NOW()),
-  ('Twist cut air blow 1', 0.1, 0.4, '#ffc000', NOW()),
-  ('Twist cut air blow 2', 0.1, 0.4, '#7575d1', NOW()),
-  ('Tension pressure', 0.1, 0.4, '#00b0ef', NOW()),
-  ('Tension adjust press', 0.1, 0.4, '#ff66cc', NOW());
+  ('After cut air blow 1', ARRAY[0,0.5], '#ffc000', NOW()),
+  ('After cut air blow 2', ARRAY[0,1], '#93ff93', NOW()),
+  ('Twist cut air blow 1', ARRAY[0,0.5], '#ffc000', NOW()),
+  ('Twist cut air blow 2', ARRAY[0,1], '#7575d1', NOW()),
+  ('Tension pressure', ARRAY[0,0.5], '#00b0ef', NOW()),
+  ('Tension adjust press', ARRAY[0,1], '#ff66cc', NOW());
+
+
+
+  CREATE TABLE needleValue (
+  id SERIAL PRIMARY KEY,
+  itemname TEXT,
+  needle FLOAT,
+  created_at TIMESTAMP DEFAULT now()
+);
+INSERT INTO needleValue (itemname, needle, created_at)
+VALUES
+  ('After cut air blow 1', 0.1, NOW()),
+  ('After cut air blow 2', 0.1, NOW()),
+  ('Twist cut air blow 1', 0.1, NOW()),
+  ('Twist cut air blow 2', 0.1,  NOW()),
+  ('Tension pressure', 0.1, NOW()),
+  ('Tension adjust press', 0.1, NOW());
 
 
 CREATE TABLE history (
