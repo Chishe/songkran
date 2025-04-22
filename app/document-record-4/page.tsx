@@ -1,6 +1,6 @@
 import History from "@/components/History";
 import Allcondition from "@/components/Allcondition";
-export default function Documentrecord() {
+export default function Documentrecord_4() {
   return (
     <div className="h-screen flex gap-2">
       <History url="/api/history" />

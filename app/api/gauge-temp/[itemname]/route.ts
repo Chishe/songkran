@@ -9,7 +9,7 @@ export async function GET(
 
   try {
 const result = await pool.query(
-  `SELECT  
+  `SELECT 
     n.needle,
     ARRAY[t.min, t.max] AS actual,
     g.rang,
@@ -22,27 +22,14 @@ JOIN (
     SELECT DISTINCT ON (itemname)
       itemname,
       item AS needle
-    FROM (
-        SELECT itemname, item, created_at FROM after_cut_1
-        UNION ALL
-        SELECT itemname, item, created_at FROM after_cut_2
-        UNION ALL
-        SELECT itemname, item, created_at FROM twist_cut_1
-        UNION ALL
-        SELECT itemname, item, created_at FROM twist_cut_2
-        UNION ALL
-        SELECT itemname, item, created_at FROM tension_p
-        UNION ALL
-        SELECT itemname, item, created_at FROM tension_ap
-    ) combined
+    FROM temp_line
     WHERE itemname = $1
     ORDER BY itemname, created_at DESC
 ) n
   ON g.itemname = n.itemname
 WHERE g.itemname = $1
 ORDER BY g.created_at DESC
-LIMIT 1;
-`,
+LIMIT 1;`,
   [decodedItemname]
 );
 

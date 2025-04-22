@@ -5,7 +5,7 @@ import WeightTable from "@/components/WeightTable";
 export default function machineCondition() {
   return (
     <div className="h-screen flex gap-2">
-      <History />
+     <History url="/api/history" />
       <div className="h-screen w-full flex-col">
         <MCcondition />
         <WeightTable />

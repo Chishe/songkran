@@ -40,6 +40,138 @@ VALUES
   ('After cut air blow 2', 0.20, '11.09'),
   ('After cut air blow 2', 0.20, '11.10');
 
+CREATE TABLE temp_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO temp_line (itemname, item, time)
+VALUES 
+  ('After Burner', 0.26, '11.01'),
+  ('Degreasing Zone 1', 0.26, '11.01'),
+  ('Degreasing Zone 2', 0.26, '11.01'),
+  ('Degreasing Zone 3', 0.26, '11.01'),
+  ('Debinder Zone 1', 0.26, '11.01'),
+  ('Debinder Zone 2', 0.26, '11.01'),
+  ('Debinder Zone 3', 0.26, '11.01'),
+  ('Front Chamber', 0.26, '11.01'),
+  ('Heating Right ATM Zone 1', 0.26, '11.01'),
+  ('Heating Right ATM Zone 2', 0.26, '11.01'),
+  ('Heating Right ATM Zone 3', 0.26, '11.01'),
+  ('Heating Right ATM Zone 4', 0.26, '11.01'),
+  ('Heating Left ATM Zone 1', 0.26, '11.01'),
+  ('Heating Left ATM Zone 2', 0.26, '11.01'),
+  ('Heating Left ATM Zone 3', 0.26, '11.01'),
+  ('Heating Left ATM Zone 4', 0.26, '11.01'),
+  ('Keeping Heat chamber', 0.26, '11.01'),
+  ('Exit Chamber', 0.26, '11.01'),
+  ('Conveyer Speed (mm/min)', 0.26, '11.01');
+
+  CREATE TABLE rc_fan_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO rc_fan_line (itemname, item, time)
+VALUES 
+  ('Degreasing Zone 1', 0.26, '11.01'),
+  ('Degreasing Zone 2', 0.26, '11.01'),
+  ('Degreasing Zone 3', 0.26, '11.01'),
+  ('Debinder Zone 1', 0.26, '11.01'),
+  ('Debinder Zone 2', 0.26, '11.01'),
+  ('Debinder Zone 3', 0.26, '11.01'),
+  ('Heating Zone 1', 0.26, '11.01'),
+  ('Heating Zone 2', 0.26, '11.01'),
+  ('Heating Zone 3', 0.26, '11.01'),
+  ('Heating Zone 4', 0.26, '11.01');
+
+
+  CREATE TABLE ex_fan_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO ex_fan_line (itemname, item, time)
+VALUES 
+  ('Blast Cooling 1', 0.26, '11.01'),
+  ('Blast Cooling 2', 0.26, '11.01'),
+  ('Blast Cooling 3', 0.26, '11.01');
+
+  CREATE TABLE bw_fan_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bw_fan_line (itemname, item, time)
+VALUES 
+  ('Blast Cooling Right ATM Zone 1', 0.26, '11.01'),
+  ('Blast Cooling Right ATM Zone 2', 0.26, '11.01'),
+  ('Blast Cooling Right ATM Zone 3', 0.26, '11.01'),
+  ('Blast Cooling Left ATM Zone 1', 0.26, '11.01'),
+  ('Blast Cooling Left ATM Zone 2', 0.26, '11.01'),
+  ('Blast Cooling Left ATM Zone 3', 0.26, '11.01');
+
+
+  CREATE TABLE nitrogen_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO nitrogen_line (itemname, item, time)
+VALUES 
+  ('Front Chamber (Entrance)', 0.26, '11.01'),
+  ('Front Chamber (Exit)', 0.26, '11.01'),
+  ('Heating Zone 1,2', 0.26, '11.01'),
+  ('Heating Zone 3,4', 0.26, '11.01'),
+  ('Keeping Zone', 0.26, '11.01');
+
+    CREATE TABLE o2_bf_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO o2_bf_line (itemname, item, time)
+VALUES 
+  ('Heating Zone 1', 0.26, '11.01'),
+  ('Heating Zone 2', 0.26, '11.01'),
+  ('Heating Zone 3', 0.26, '11.01'),
+  ('Heating Zone 4', 0.26, '11.01'),
+  ('Keeping Zone', 0.26, '11.01'),
+  ('Exit Zone', 0.26, '11.01');
+
+      CREATE TABLE o2_af_line (
+  id SERIAL PRIMARY KEY,
+  itemname VARCHAR(255) NOT NULL,
+  item FLOAT NOT NULL,
+  time VARCHAR(10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO o2_af_line (itemname, item, time)
+VALUES 
+  ('Heating Zone 1', 0.26, '11.01'),
+  ('Heating Zone 3', 0.26, '11.01'),
+  ('Keeping Zone', 0.26, '11.01'),
+  ('Exit Zone', 0.26, '11.01');
+
   CREATE TABLE bz_temp (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
@@ -51,9 +183,9 @@ VALUES ('After Burner'),
 ('Degreasing Zone 1'),
 ('Degreasing Zone 2'),
 ('Degreasing Zone 3'),
-('Debinder zone 1'),
-('Debinder zone 2'),
-('Debinder zone 3'),
+('Debinder Zone 1'),
+('Debinder Zone 2'),
+('Debinder Zone 3'),
 ('Front Chamber'),
 ('Heating Right ATM Zone 1'),
 ('Heating Left ATM Zone 1'),
@@ -65,92 +197,7 @@ VALUES ('After Burner'),
 ('Heating Left ATM Zone 4'),
 ('Keeping Heat chamber'),
 ('Exit Chamber'),
-('Conveyer Speed');
-
-
-CREATE TABLE temp_deg (
-  id SERIAL PRIMARY KEY,
-  itemname VARCHAR(255) NOT NULL,
-  item FLOAT NOT NULL,
-  time VARCHAR(10) NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
-INSERT INTO temp_line (itemname, item, time)
-VALUES 
-  ('Degreasing Zone 1', 0.26, '11.01'),
-  ('Degreasing Zone 1', 0.24, '11.02'),
-  ('Degreasing Zone 1', 0.22, '11.03'),
-  ('Degreasing Zone 1', 0.20, '11.04'),
-  ('Degreasing Zone 1', 0.20, '11.05'),
-  ('Degreasing Zone 1', 0.20, '11.06'),
-  ('Degreasing Zone 1', 0.20, '11.07'),
-  ('Degreasing Zone 1', 0.20, '11.08'),
-  ('Degreasing Zone 1', 0.20, '11.09'),
-  ('Degreasing Zone 1', 0.20, '11.10'),
-  ('Degreasing Zone 2', 0.26, '11.01'),
-  ('Degreasing Zone 2', 0.24, '11.02'),
-  ('Degreasing Zone 2', 0.22, '11.03'),
-  ('Degreasing Zone 2', 0.20, '11.04'),
-  ('Degreasing Zone 2', 0.20, '11.05'),
-  ('Degreasing Zone 2', 0.20, '11.06'),
-  ('Degreasing Zone 2', 0.20, '11.07'),
-  ('Degreasing Zone 2', 0.20, '11.08'),
-  ('Degreasing Zone 2', 0.20, '11.09'),
-  ('Degreasing Zone 2', 0.20, '11.10'),
-  ('Degreasing Zone 3', 0.26, '11.01'),
-  ('Degreasing Zone 3', 0.24, '11.02'),
-  ('Degreasing Zone 3', 0.22, '11.03'),
-  ('Degreasing Zone 3', 0.20, '11.04'),
-  ('Degreasing Zone 3', 0.20, '11.05'),
-  ('Degreasing Zone 3', 0.20, '11.06'),
-  ('Degreasing Zone 3', 0.20, '11.07'),
-  ('Degreasing Zone 3', 0.20, '11.08'),
-  ('Degreasing Zone 3', 0.20, '11.09'),
-  ('Degreasing Zone 3', 0.20, '11.10'),
-  ('Debinder Zone 1', 0.26, '11.01'),
-  ('Debinder Zone 1', 0.24, '11.02'),
-  ('Debinder Zone 1', 0.22, '11.03'),
-  ('Debinder Zone 1', 0.20, '11.04'),
-  ('Debinder Zone 1', 0.20, '11.05'),
-  ('Debinder Zone 1', 0.20, '11.06'),
-  ('Debinder Zone 1', 0.20, '11.07'),
-  ('Debinder Zone 1', 0.20, '11.08'),
-  ('Debinder Zone 1', 0.20, '11.09'),
-  ('Debinder Zone 1', 0.20, '11.10'),
-  ('Debinder Zone 2', 0.26, '11.01'),
-  ('Debinder Zone 2', 0.24, '11.02'),
-  ('Debinder Zone 2', 0.22, '11.03'),
-  ('Debinder Zone 2', 0.20, '11.04'),
-  ('Debinder Zone 2', 0.20, '11.05'),
-  ('Debinder Zone 2', 0.20, '11.06'),
-  ('Debinder Zone 2', 0.20, '11.07'),
-  ('Debinder Zone 2', 0.20, '11.08'),
-  ('Debinder Zone 2', 0.20, '11.09'),
-  ('Debinder Zone 2', 0.20, '11.10'),
-  ('Debinder Zone 3', 0.26, '11.01'),
-  ('Debinder Zone 3', 0.24, '11.02'),
-  ('Debinder Zone 3', 0.22, '11.03'),
-  ('Debinder Zone 3', 0.20, '11.04'),
-  ('Debinder Zone 3', 0.20, '11.05'),
-  ('Debinder Zone 3', 0.20, '11.06'),
-  ('Debinder Zone 3', 0.20, '11.07'),
-  ('Debinder Zone 3', 0.20, '11.08'),
-  ('Debinder Zone 3', 0.20, '11.09'),
-  ('Debinder Zone 3', 0.20, '11.10'),
-  ('Front Chamber', 0.26, '11.01'),
-  ('Front Chamber', 0.24, '11.02'),
-  ('Front Chamber', 0.22, '11.03'),
-  ('Front Chamber', 0.20, '11.04'),
-  ('Front Chamber', 0.20, '11.05'),
-  ('Front Chamber', 0.20, '11.06'),
-  ('Front Chamber', 0.20, '11.07'),
-  ('Front Chamber', 0.20, '11.08'),
-  ('Front Chamber', 0.20, '11.09'),
-  ('Front Chamber', 0.20, '11.10');
-
-
-
+('Conveyer Speed (mm/min)');
 
   CREATE TABLE bz_rc_fan (
   id SERIAL PRIMARY KEY,
@@ -424,7 +471,48 @@ VALUES
   ('Twist cut air blow 1', ARRAY[0,0.5], '#ffc000', NOW()),
   ('Twist cut air blow 2', ARRAY[0,1], '#7575d1', NOW()),
   ('Tension pressure', ARRAY[0,0.5], '#00b0ef', NOW()),
-  ('Tension adjust press', ARRAY[0,1], '#ff66cc', NOW());
+  ('Tension adjust press', ARRAY[0,1], '#ff66cc', NOW()),
+   ('After Burner', ARRAY[0,0.5], '#ffc000', NOW()),
+('Degreasing Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Degreasing Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Degreasing Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Debinder Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Debinder Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Debinder Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Right ATM Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Left ATM Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Right ATM Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Left ATM Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Right ATM Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Left ATM Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Right ATM Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Left ATM Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Front 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Front 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Front 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Rear 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Rear 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Right Rear 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Front 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Front 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Front 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Rear 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Rear 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling Left Rear 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Front Chamber', ARRAY[0,0.5], '#ffc000', NOW()),
+('Front Chamber(Entrance)', ARRAY[0,0.5], '#ffc000', NOW()),
+('Front Chamber(Exit)', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 1,2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 3,4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Exit Zone', ARRAY[0,0.5], '#ffc000', NOW()),
+('Keeping Zone', ARRAY[0,0.5], '#ffc000', NOW()),
+('Keeping Heat chamber', ARRAY[0,0.5], '#ffc000', NOW()),
+('Exit Chamber', ARRAY[0,0.5], '#ffc000', NOW()),
+('Conveyer Speed (mm/min)', ARRAY[0,0.5], '#ffc000', NOW());
 
 CREATE TABLE history (
   id SERIAL PRIMARY KEY,
@@ -562,16 +650,16 @@ CREATE TABLE tension_p (
 
 INSERT INTO tension_p (itemname, item, time)
 VALUES 
-  ('Tension press', 0.26, '11.01'),
-  ('Tension press', 0.24, '11.02'),
-  ('Tension press', 0.22, '11.03'),
-  ('Tension press', 0.20, '11.04'),
-  ('Tension press', 0.20, '11.05'),
-  ('Tension press', 0.20, '11.06'),
-  ('Tension press', 0.20, '11.07'),
-  ('Tension press', 0.20, '11.08'),
-  ('Tension press', 0.20, '11.09'),
-  ('Tension press', 0.20, '11.10');
+  ('Tension  pressure', 0.26, '11.01'),
+  ('Tension  pressure', 0.24, '11.02'),
+  ('Tension  pressure', 0.22, '11.03'),
+  ('Tension  pressure', 0.20, '11.04'),
+  ('Tension  pressure', 0.20, '11.05'),
+  ('Tension  pressure', 0.20, '11.06'),
+  ('Tension  pressure', 0.20, '11.07'),
+  ('Tension  pressure', 0.20, '11.08'),
+  ('Tension  pressure', 0.20, '11.09'),
+  ('Tension  pressure', 0.20, '11.10');
 
 CREATE TABLE tension_ap (
   id SERIAL PRIMARY KEY,
@@ -621,6 +709,8 @@ VALUES
  ('TG233310-9730', 0.18, 0.28, '#99d266'),
  ('TG222310-9970', 0.18, 0.28, '#969696'),
  ('TG233310-0090', 0.18, 0.28, '#ffffff'),
+  ('TG233310-0090', 0.18, 0.28, '#ffffff'),
+ ('After Burner', 0.18, 0.28, '#ffffff'),
  ('Degreasing Zone 1', 0.18, 0.28, '#ffffff'),
 ('Degreasing Zone 2', 0.18, 0.28, '#ffffff'),
 ('Degreasing Zone 3', 0.18, 0.28, '#ffffff'),
@@ -647,7 +737,7 @@ VALUES
 ('Blast Cooling Left Rear 1', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Left Rear 2', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Left Rear 3', 0.18, 0.28, '#ffffff'),
-('Kepping Heat chamber', 0.18, 0.28, '#ffffff'),
+('Front Chamber', 0.18, 0.28, '#ffffff'),
 ('Front Chamber(Entrance)', 0.18, 0.28, '#ffffff'),
 ('Front Chamber(Exit)', 0.18, 0.28, '#ffffff'),
 ('Heating Zone 1,2', 0.18, 0.28, '#ffffff'),
@@ -657,10 +747,10 @@ VALUES
 ('Heating Zone 3', 0.18, 0.28, '#ffffff'),
 ('Heating Zone 4', 0.18, 0.28, '#ffffff'),
 ('Exit Zone', 0.18, 0.28, '#ffffff'),
-('Kepping Zone', 0.18, 0.28, '#ffffff'),
-('Kepping Heat chamber', 0.18, 0.28, '#ffffff'),
+('Keeping Zone', 0.18, 0.28, '#ffffff'),
+('Keeping Heat chamber', 0.18, 0.28, '#ffffff'),
 ('Exit Chamber', 0.18, 0.28, '#ffffff'),
-('Conveyer Speed', 0.18, 0.28, '#ffffff'),
+('Conveyer Speed (mm/min)', 0.18, 0.28, '#ffffff');
 
 
 

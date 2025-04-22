@@ -14,6 +14,11 @@ export default function Navbar() {
             case "/machine-condition":
                 return "Machine condition";
             case "/document-record":
+            case "/document-record-1":
+            case "/document-record-2":
+            case "/document-record-3":
+            case "/document-record-4":
+            case "/document-record-5":
                 return "Document record";
             case "/history-problem":
                 return "History problem";
@@ -21,6 +26,7 @@ export default function Navbar() {
                 return "Quality result";
         }
     };
+    
 
     const getLinkClass = (path: string) =>
         `hover:underline ${pathname === path ? 'text-red-500 font-bold' : ''}`;

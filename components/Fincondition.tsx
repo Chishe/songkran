@@ -12,7 +12,7 @@ type FinItem = {
   item: string;
   ots: string;
   mcs: string;
-  status?: number; // <-- เพิ่มไว้ใช้จาก status-result
+  status?: number;
 };
 
 export default function Fincondition() {
