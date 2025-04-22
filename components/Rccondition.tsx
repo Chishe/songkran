@@ -14,7 +14,7 @@ type mcItem = {
   status: string;
 };
 
-export default function Tempcondition() {
+export default function Rccondition() {
   const [mcData, setmcData] = useState<mcItem[]>([]);
   const [statusData, setStatusData] = useState<{ [key: string]: number }>({});
 

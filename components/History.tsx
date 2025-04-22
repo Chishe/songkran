@@ -12,25 +12,29 @@ type HistoryItem = {
   status: string;
 };
 
-export default function History() {
+type Props = {
+  url: string;
+};
+
+export default function History({ url }: Props) {
   const [historyData, setHistoryData] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
-    axios.get("/api/history").then((res) => {
+    axios.get(url).then((res) => {
       setHistoryData(res.data);
     });
-  }, []);
+  }, [url]);
 
   return (
     <div className="mt-23 p-4 border-3 border-[#0070C0]">
       <h2 className="text-xl font-bold mb-4">History:</h2>
-      <table className="min-w-full table-auto border-collapse">
+      <table className="min-w-full table-auto border-collapse text-center">
         <thead>
           <tr className="text-yellow-300">
-            <th className="py-2 px-4 text-center whitespace-nowrap">Date</th>
-            <th className="py-2 px-4 text-center whitespace-nowrap">Time</th>
-            <th className="py-2 px-4 text-center whitespace-nowrap">Item</th>
-            <th className="py-2 px-4 text-center whitespace-nowrap">Status</th>
+            <th className="py-2 px-4 whitespace-nowrap">Date</th>
+            <th className="py-2 px-4 whitespace-nowrap">Time</th>
+            <th className="py-2 px-4 whitespace-nowrap">Item</th>
+            <th className="py-2 px-4 whitespace-nowrap">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -40,17 +44,18 @@ export default function History() {
               <td className="py-2 px-4 whitespace-nowrap">{item.time}</td>
               <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
               <td className="py-2 px-4 whitespace-nowrap">
-                {item.status === "NG" ? (
-                  <FaCircle className="text-red-500 text-center" />
-                ) : (
-                  <FaCircle className="text-green-500 text-center" />
-                )}
+                <div className="flex justify-center items-center">
+                  {item.status === "NG" ? (
+                    <FaCircle className="text-red-500" />
+                  ) : (
+                    <FaCircle className="text-green-500" />
+                  )}
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-
   );
 }
