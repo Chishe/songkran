@@ -254,9 +254,11 @@ CREATE TABLE history_problems (
   item TEXT NOT NULL,
   min TEXT NOT NULL,
   max TEXT NOT NULL,
+  value TEXT NOT NULL,
   status TEXT NOT NULL
 );
-INSERT INTO history_problems (date, time, item, min,max,status) VALUES
+
+INSERT INTO history_problems (date, time, item, min, max, value, status) VALUES
 ('2023-07-08', '11:02', 'After cut air blow 1', '0.22', '0.25', '0.27', 'NG'),
 ('2023-06-12', '10:47', 'After cut air blow 2', '0.22', '0.25', '0.26', 'NG'),
 ('2023-06-12', '10:47', 'Twist chut air blow 1', '0.22', '0.25', '0.18', 'NG'),
@@ -268,6 +270,7 @@ INSERT INTO history_problems (date, time, item, min,max,status) VALUES
 ('2023-06-12', '10:47', 'Twist chut air blow 2', '0.22', '0.25', '0.20', 'NG'),
 ('2023-06-08', '10:22', 'Twist chut air blow 2', '0.20', '0.50', '0.19', 'NG');
 
+
 CREATE TABLE weights (
     id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
@@ -275,10 +278,12 @@ CREATE TABLE weights (
     item_name VARCHAR(255) NOT NULL,
     items INTEGER[] NOT NULL
 );
-INSERT INTO weights (date, time, item_name,items)
+
+INSERT INTO weights (date, time, item_name, items)
 VALUES
-  ('2023-08-07', '11:15:00', Weight A, {400}),
-  ('2023-08-07', '11:15:00', Weight B, {1100});
+  ('2023-08-07', '11:15:00', 'Weight A', ARRAY[400]),
+  ('2023-08-07', '11:15:00', 'Weight B', ARRAY[1100]);
+
 
   CREATE TABLE needleValue (
   id SERIAL PRIMARY KEY,

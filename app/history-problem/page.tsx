@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCircle } from "react-icons/fa";
 
+
 type HistoryItem = {
     id: string;
     date: string;
@@ -12,6 +13,7 @@ type HistoryItem = {
     actual: number;
     status: string;
 };
+
 
 export default function HistoryProblem() {
     const [history, setHistory] = useState<HistoryItem[]>([]);

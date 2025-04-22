@@ -29,12 +29,11 @@ export default function Line({ url }: { url: string }) {
   const [itemValues, setItemValues] = useState<number[]>([]);
   const [timeStamps, setTimeStamps] = useState<string[]>([]);
   const [itemName, setItemName] = useState<string>('');
-  const [pointColor, setPointColor] = useState<string>('#00f2fe'); // Default fallback
+  const [pointColor, setPointColor] = useState<string>('#00f2fe');
 
   const minThreshold = 0.18;
   const maxThreshold = 0.28;
 
-  // Fetch chart data
   useEffect(() => {
     fetch(url)
       .then(res => res.json())
@@ -45,7 +44,6 @@ export default function Line({ url }: { url: string }) {
         const currentItem = reversed[0]?.itemname || '';
         setItemName(currentItem);
 
-        // Fetch threshold color for this item
         fetch('/api/threshold')
           .then(res => res.json())
           .then(thresholds => {

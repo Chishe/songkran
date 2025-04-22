@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Songkran App",
+  title: "My Mc App",
   description: "Generated with Next.js + Tailwind CSS",
 };
 
