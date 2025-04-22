@@ -22,7 +22,7 @@ JOIN (
     SELECT DISTINCT ON (itemname)
       itemname,
       item AS needle
-    FROM temp_line
+    FROM o2_af_line
     WHERE itemname = $1
     ORDER BY itemname, created_at DESC
 ) n

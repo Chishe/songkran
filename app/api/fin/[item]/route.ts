@@ -10,7 +10,7 @@ export async function GET(req: NextRequest, { params }: { params: Params }) {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM fin_linecompo WHERE itemname = $1 ORDER BY time DESC LIMIT 10`,
+            `SELECT * FROM fin_linecompo WHERE itemname = $1 ORDER BY time DESC LIMIT 1`,
             [item]
         );
 

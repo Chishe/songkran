@@ -31,8 +31,8 @@ export default function Line({ url }: { url: string }) {
   const [itemName, setItemName] = useState<string>('');
   const [pointColor, setPointColor] = useState<string>('#00f2fe');
 
-  const minThreshold = 0.18;
-  const maxThreshold = 0.28;
+  const [minThreshold, setMinThreshold] = useState<number | null>(null);
+  const [maxThreshold, setMaxThreshold] = useState<number | null>(null);
 
   useEffect(() => {
     fetch(url)
@@ -43,27 +43,45 @@ export default function Line({ url }: { url: string }) {
         setTimeStamps(reversed.map((d: any) => d.time));
         const currentItem = reversed[0]?.itemname || '';
         setItemName(currentItem);
-
         fetch('/api/threshold')
-          .then(res => res.json())
-          .then(thresholds => {
-            const threshold = thresholds.find((t: any) => t.item === currentItem);
-            if (threshold) {
-              setPointColor(threshold.color);
-            }
-          })
-          .catch(err => {
-            console.error('Failed to fetch thresholds:', err);
-          });
+        .then(res => res.json())
+        .then(thresholds => {
+          const threshold = thresholds.find(
+            (t: any) => t.item.trim().toLowerCase() === currentItem.trim().toLowerCase()
+          );
+          if (threshold) {
+            setPointColor(threshold.color);
+            setMinThreshold(threshold.min);
+            setMaxThreshold(threshold.max);
+            console.log('Min Threshold:', threshold.min);
+            console.log('Max Threshold:', threshold.max);
+          } else {
+            console.warn('Threshold not found for:', currentItem);
+          }
+        })
+        .catch(err => {
+          console.error('Failed to fetch thresholds:', err);
+        });
+      })
+      .catch(err => {
+        console.error('Failed to fetch data:', err);
       });
   }, [url]);
+  
 
+  const pointCount = timeStamps.length;
+
+  // เพิ่ม label ปลอมให้ threshold ถ้ามีแค่ 1 จุด เพื่อให้เส้น "ยาว"
+  const labels = pointCount === 1
+    ? [timeStamps[0], timeStamps[0] + ' '] // label ปลอม
+    : timeStamps;
+  
   const data = {
-    labels: timeStamps,
+    labels,
     datasets: [
       {
         label: itemName,
-        data: itemValues,
+        data: itemValues, // แสดงเท่าที่มี
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 2,
         tension: 0.3,
@@ -73,22 +91,30 @@ export default function Line({ url }: { url: string }) {
         pointRadius: 5,
         pointHoverRadius: 7
       },
-      {
-        label: 'Max Threshold',
-        data: Array(timeStamps.length).fill(maxThreshold),
-        borderColor: '#ff0000',
-        borderWidth: 2,
-        pointRadius: 0,
-        fill: false
-      },
-      {
-        label: 'Min Threshold',
-        data: Array(timeStamps.length).fill(minThreshold),
-        borderColor: '#ff0000',
-        borderWidth: 2,
-        pointRadius: 0,
-        fill: false
-      }
+      ...(maxThreshold !== undefined && maxThreshold !== null
+        ? [{
+            label: 'Max Threshold',
+            data: pointCount === 1
+              ? [maxThreshold, maxThreshold]
+              : Array(pointCount).fill(maxThreshold),
+            borderColor: '#ff0000',
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false
+          }]
+        : []),
+      ...(minThreshold !== undefined && minThreshold !== null
+        ? [{
+            label: 'Min Threshold',
+            data: pointCount === 1
+              ? [minThreshold, minThreshold]
+              : Array(pointCount).fill(minThreshold),
+            borderColor: '#ff0000',
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: false
+          }]
+        : [])
     ]
   };
 

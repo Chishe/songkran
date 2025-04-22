@@ -3,9 +3,10 @@ import { pool } from '@/lib/db';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { itemname: string } }
+  context: { params: Record<string, string> }
 ) {
-  const { itemname } = params;
+  const itemname = decodeURIComponent(context.params.itemname);
+  console.log('Requesting status for:', itemname);
 
   try {
     const result = await pool.query(
@@ -13,15 +14,15 @@ export async function GET(
       SELECT 
         n.id,
         n.itemname,
-        n.needle,
+        n.item,
         t.min,
         t.max,
         CASE 
-          WHEN n.needle >= t.min AND n.needle <= t.max THEN 0
+          WHEN n.item >= t.min AND n.item <= t.max THEN 0
           ELSE 1
         END AS status
       FROM 
-        needlevalue n
+        o2_af_line n
       JOIN 
         threshold t 
       ON 
@@ -29,7 +30,8 @@ export async function GET(
       WHERE 
         n.itemname = $1
       ORDER BY 
-        n.id ASC;
+        n.id DESC
+      LIMIT 1;
       `,
       [itemname]
     );

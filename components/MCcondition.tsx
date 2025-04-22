@@ -26,7 +26,7 @@ export default function MCcondition() {
 
     useEffect(() => {
         mcData.forEach((item) => {
-            axios.get(`http://localhost:3000/api/status-actual/${encodeURIComponent(item.item)}`)
+            axios.get(`http://localhost:3000/api/status-mactual/${encodeURIComponent(item.item)}`)
                 .then((res) => {
                     setStatusData(prevStatusData => ({
                         ...prevStatusData,

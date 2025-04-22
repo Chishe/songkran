@@ -6,7 +6,7 @@ export async function GET() {
     const client = await pool.connect();
 
     const res = await client.query(`
-      SELECT * FROM Threshold
+      SELECT item,min,max,color,created_at FROM Threshold
       ORDER BY id DESC 
     `);
 

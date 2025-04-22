@@ -42,21 +42,20 @@ export default function Allcondition({
   const pathname = usePathname();
   const router = useRouter();
 
-  // Ensure path is a string
+
   const path = router.pathname || "";
   let currentIndex = 0;
 
-  // Use match() only when path is not empty or undefined
   const match = path.match(/document-record(?:-(\d+))?/);
   if (match && match[1]) {
     currentIndex = parseInt(match[1], 10);
   }
 
-  const maxIndex = 5; // <- กำหนดจำนวนหน้าสูงสุดไว้ที่นี่
+  const maxIndex = 5;
   const prevIndex = currentIndex > 0 ? currentIndex - 1 : 0;
   const nextIndex = currentIndex < maxIndex ? currentIndex + 1 : currentIndex;
 
-  const base = "/document-record"; // <-- Added base definition here
+  const base = "/document-record"; 
   const prevHref = prevIndex === 0 ? base : `${base}-${prevIndex}`;
   const nextHref = nextIndex === 0 ? base : `${base}-${nextIndex}`;
 
@@ -107,7 +106,6 @@ export default function Allcondition({
 
   const getGraphUrl = (itemName: string) =>
     `${graphUrlBase}${encodeURIComponent(itemName)}`;
-
   const getGaugeUrl = (itemName: string) =>
     `${gaugeUrlBase}${encodeURIComponent(itemName)}`;
 

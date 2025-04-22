@@ -650,16 +650,16 @@ CREATE TABLE tension_p (
 
 INSERT INTO tension_p (itemname, item, time)
 VALUES 
-  ('Tension  pressure', 0.26, '11.01'),
-  ('Tension  pressure', 0.24, '11.02'),
-  ('Tension  pressure', 0.22, '11.03'),
-  ('Tension  pressure', 0.20, '11.04'),
-  ('Tension  pressure', 0.20, '11.05'),
-  ('Tension  pressure', 0.20, '11.06'),
-  ('Tension  pressure', 0.20, '11.07'),
-  ('Tension  pressure', 0.20, '11.08'),
-  ('Tension  pressure', 0.20, '11.09'),
-  ('Tension  pressure', 0.20, '11.10');
+  ('Tension pressure', 0.26, '11.01'),
+  ('Tension pressure', 0.24, '11.02'),
+  ('Tension pressure', 0.22, '11.03'),
+  ('Tension pressure', 0.20, '11.04'),
+  ('Tension pressure', 0.20, '11.05'),
+  ('Tension pressure', 0.20, '11.06'),
+  ('Tension pressure', 0.20, '11.07'),
+  ('Tension pressure', 0.20, '11.08'),
+  ('Tension pressure', 0.20, '11.09'),
+  ('Tension pressure', 0.20, '11.10');
 
 CREATE TABLE tension_ap (
   id SERIAL PRIMARY KEY,

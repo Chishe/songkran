@@ -7,9 +7,9 @@ export default function Documentrecord_1() {
       <div className="h-screen w-full flex-col">
         <Allcondition
           dataUrl="/api/temp"
-          statusUrlBase="/api/status-actual/"
+          statusUrlBase="/api/temp-actual/"
           graphUrlBase="/api/bz-line/"
-          gaugeUrlBase="/api/gauge-temp/"
+          gaugeUrlBase="/api/gauge-rc-fan/"
           onoffUrlBase="/api/status-temp"
         />
       </div>
