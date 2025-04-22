@@ -11,7 +11,7 @@ type mcItem = {
     date: string;
     time: string;
     item: string;
-    status: string;  // เปลี่ยนเป็น string หรือ number ตามที่คุณต้องการ
+    status: string;
 };
 
 export default function MCcondition() {

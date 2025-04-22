@@ -40,6 +40,130 @@ VALUES
   ('After cut air blow 2', 0.20, '11.09'),
   ('After cut air blow 2', 0.20, '11.10');
 
+  CREATE TABLE bz_temp (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_temp (item)
+VALUES ('After Burner'),
+('Degreasing Zone 1'),
+('Degreasing Zone 2'),
+('Degreasing Zone 3'),
+('Debinder zone 1'),
+('Debinder zone 2'),
+('Debinder zone 3'),
+('Front Chamber'),
+('Heating Right ATM Zone 1'),
+('Heating Left ATM Zone 1'),
+('Heating Right ATM Zone 2'),
+('Heating Left ATM Zone 2'),
+('Heating Right ATM Zone 3'),
+('Heating Left ATM Zone 3'),
+('Heating Right ATM Zone 4'),
+('Heating Left ATM Zone 4'),
+('Keeping Heat chamber'),
+('Exit Chamber'),
+('Conveyer Speed');
+
+  CREATE TABLE bz_rc_fan (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_rc_fan (item)
+VALUES ('After Burner'),
+('Degreasing Zone 1'),
+('Degreasing Zone 2'),
+('Degreasing Zone 3'),
+('Debinder zone 1'),
+('Debinder zone 2'),
+('Debinder zone 3'),
+('Heating zone 1'),
+('Heating zone 2'),
+('Heating zone 3'),
+('Heating zone 4');
+
+  CREATE TABLE bz_ex_fan (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_ex_fan (item)
+VALUES
+('Blast Cooling 1'),
+('Blast Cooling 2'),
+('Blast Cooling 3');
+
+
+  CREATE TABLE bz_bw_fan (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_bw_fan (item)
+VALUES 
+('Blast Cooling Right Front 1'),
+('Blast Cooling Left Front 1'),
+('Blast Cooling Right Rear 1'),
+('Blast Cooling Left Rear 1'),
+('Blast Cooling Right Front 2'),
+('Blast Cooling Left Front 2'),
+('Blast Cooling Right Rear 2'),
+('Blast Cooling Left Rear 2'),
+('Blast Cooling Right Front 3'),
+('Blast Cooling Left Front 3'),
+('Blast Cooling Right Rear 3'),
+('Blast Cooling Left Rear 3');
+
+  CREATE TABLE bz_nitrogen (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_nitrogen (item)
+VALUES 
+('Front Chamber (Entrance)'),
+('Front Chamber (Exit)'),
+('Heating Zone 1,2'),
+('Heating Zone 3,4'),
+('Keeping Zone');
+
+  CREATE TABLE bz_o2_b (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_o2_b (item)
+VALUES 
+('Front Chamber (Entrance)'),
+('Front Chamber (Exit)'),
+('Heating Zone 1,2'),
+('Heating Zone 3,4'),
+('Keeping Zone'),
+('Exit Zone');
+
+  CREATE TABLE bz_o2_a (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+INSERT INTO bz_o2_a (item)
+VALUES 
+('Front Chamber (Entrance)'),
+('Front Chamber (Exit)'),
+('Heating Zone 1,2'),
+('Heating Zone 3,4'),
+('Keeping Zone'),
+('Exit Zone');
+
   CREATE TABLE conditionmc (
   id SERIAL PRIMARY KEY,
   date DATE NOT NULL,
