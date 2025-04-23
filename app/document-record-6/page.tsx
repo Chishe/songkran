@@ -1,22 +1,22 @@
 import Link from "next/link";
 import History from "@/components/History";
 import Amain from "@/components/Amain";
-export default function Documentrecord_2() {
+export default function Documentrecord_6() {
   return (
     <div className="h-screen flex gap-2">
       <History url="/api/history" />
       <div className="h-screen w-full flex-col">
         <Amain
-          dataUrl="/api/ex-fan"
-          statusUrlBase="/api/ex-actual/"
-          graphUrlBase="/api/ex-fan-line/"
-          gaugeUrlBase="/api/gauge-ex-fan/"
-          onoffUrlBase="/api/status-ex"
+          dataUrl="/api/o2-a"
+          statusUrlBase="/api/o2-a-actual/"
+          graphUrlBase="/api/o2-af-line/"
+          gaugeUrlBase="/api/gauge-o2-af/"
+          onoffUrlBase="/api/status-o2-a"
         />
       </div>
       <div className="fixed bottom-4 left-4 flex gap-2 z-[100]">
         <Link
-          href="/document-record-1"
+          href="/document-record-5"
           className="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50"
         >
           <svg
@@ -36,7 +36,7 @@ export default function Documentrecord_2() {
           <span className="ml-1 font-bold text-lg">Back</span>
         </Link>
         <Link
-          href="/document-record-3"
+          href="/document-record-6"
           className="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50"
         >
           <span className="mr-1 font-bold text-lg">Next</span>

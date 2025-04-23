@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const client = await pool.connect();
     const res = await client.query(`
-      SELECT * FROM public.bz_rc_fan
+      SELECT * FROM bz_rc_fan
       ORDER BY id ASC
     `);
     client.release();

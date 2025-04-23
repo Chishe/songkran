@@ -86,10 +86,10 @@ VALUES
   ('Debinder Zone 1', 0.26, '11.01'),
   ('Debinder Zone 2', 0.26, '11.01'),
   ('Debinder Zone 3', 0.26, '11.01'),
-  ('Heating Zone 1', 0.26, '11.01'),
-  ('Heating Zone 2', 0.26, '11.01'),
-  ('Heating Zone 3', 0.26, '11.01'),
-  ('Heating Zone 4', 0.26, '11.01');
+  ('Heating zone 1', 0.26, '11.01'),
+  ('Heating zone 2', 0.26, '11.01'),
+  ('Heating zone 3', 0.26, '11.01'),
+  ('Heating zone 4', 0.26, '11.01');
 
 
   CREATE TABLE ex_fan_line (
@@ -116,12 +116,19 @@ VALUES
 
 INSERT INTO bw_fan_line (itemname, item, time)
 VALUES 
-  ('Blast Cooling Right ATM Zone 1', 0.26, '11.01'),
-  ('Blast Cooling Right ATM Zone 2', 0.26, '11.01'),
-  ('Blast Cooling Right ATM Zone 3', 0.26, '11.01'),
-  ('Blast Cooling Left ATM Zone 1', 0.26, '11.01'),
-  ('Blast Cooling Left ATM Zone 2', 0.26, '11.01'),
-  ('Blast Cooling Left ATM Zone 3', 0.26, '11.01');
+  ('Blast Cooling Right Front 1', 0.26, '11.01'),
+  ('Blast Cooling Right Rear 1', 0.26, '11.01'),
+  ('Blast Cooling Left Front 1', 0.26, '11.01'),
+  ('Blast Cooling Left Rear 1', 0.26, '11.01'),
+  ('Blast Cooling Right Front 2', 0.26, '11.01'),
+  ('Blast Cooling Right Rear 2', 0.26, '11.01'),
+  ('Blast Cooling Left Front 2', 0.26, '11.01'),
+  ('Blast Cooling Left Rear 2', 0.26, '11.01'),
+  ('Blast Cooling Right Front 3', 0.26, '11.01'),
+  ('Blast Cooling Right Rear 3', 0.26, '11.01'),
+  ('Blast Cooling Left Front 3', 0.26, '11.01'),
+  ('Blast Cooling Left Rear 3', 0.26, '11.01');
+
 
 
   CREATE TABLE nitrogen_line (
@@ -136,9 +143,9 @@ INSERT INTO nitrogen_line (itemname, item, time)
 VALUES 
   ('Front Chamber (Entrance)', 0.26, '11.01'),
   ('Front Chamber (Exit)', 0.26, '11.01'),
-  ('Heating Zone 1,2', 0.26, '11.01'),
-  ('Heating Zone 3,4', 0.26, '11.01'),
-  ('Keeping Zone', 0.26, '11.01');
+  ('Heating zone 1,2', 0.26, '11.01'),
+  ('Heating zone 3,4', 0.26, '11.01'),
+  ('Keeping zone', 0.26, '11.01');
 
     CREATE TABLE o2_bf_line (
   id SERIAL PRIMARY KEY,
@@ -150,11 +157,11 @@ VALUES
 
 INSERT INTO o2_bf_line (itemname, item, time)
 VALUES 
-  ('Heating Zone 1', 0.26, '11.01'),
-  ('Heating Zone 2', 0.26, '11.01'),
-  ('Heating Zone 3', 0.26, '11.01'),
-  ('Heating Zone 4', 0.26, '11.01'),
-  ('Keeping Zone', 0.26, '11.01'),
+  ('Heating zone 1', 0.26, '11.01'),
+  ('Heating zone 2', 0.26, '11.01'),
+  ('Heating zone 3', 0.26, '11.01'),
+  ('Heating zone 4', 0.26, '11.01'),
+  ('Keeping zone', 0.26, '11.01'),
   ('Exit Zone', 0.26, '11.01');
 
       CREATE TABLE o2_af_line (
@@ -167,9 +174,9 @@ VALUES
 
 INSERT INTO o2_af_line (itemname, item, time)
 VALUES 
-  ('Heating Zone 1', 0.26, '11.01'),
-  ('Heating Zone 3', 0.26, '11.01'),
-  ('Keeping Zone', 0.26, '11.01'),
+  ('Heating zone 1', 0.26, '11.01'),
+  ('Heating zone 3', 0.26, '11.01'),
+  ('Keeping zone', 0.26, '11.01'),
   ('Exit Zone', 0.26, '11.01');
 
   CREATE TABLE bz_temp (
@@ -262,7 +269,7 @@ INSERT INTO bz_nitrogen (item)
 VALUES 
 ('Front Chamber (Entrance)'),
 ('Front Chamber (Exit)'),
-('Heating Zone 1,2'),
+('Heating zone 1,2'),
 ('Heating Zone 3,4'),
 ('Keeping Zone');
 
@@ -274,10 +281,10 @@ VALUES
 
 INSERT INTO bz_o2_b (item)
 VALUES 
-('Front Chamber (Entrance)'),
-('Front Chamber (Exit)'),
-('Heating Zone 1,2'),
-('Heating Zone 3,4'),
+('Heating zone 1'),
+('Heating zone 2'),
+('Heating zone 3'),
+('Heating zone 4'),
 ('Keeping Zone'),
 ('Exit Zone');
 
@@ -289,10 +296,8 @@ VALUES
 
 INSERT INTO bz_o2_a (item)
 VALUES 
-('Front Chamber (Entrance)'),
-('Front Chamber (Exit)'),
-('Heating Zone 1,2'),
-('Heating Zone 3,4'),
+('Heating zone 1'),
+('Heating zone 2'),
 ('Keeping Zone'),
 ('Exit Zone');
 
@@ -487,6 +492,9 @@ VALUES
 ('Heating Left ATM Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Heating Right ATM Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Heating Left ATM Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Blast Cooling 3', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Blast Cooling Right Front 1', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Blast Cooling Right Front 2', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Blast Cooling Right Front 3', ARRAY[0,0.5], '#ffc000', NOW()),
@@ -500,14 +508,14 @@ VALUES
 ('Blast Cooling Left Rear 2', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Blast Cooling Left Rear 3', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Front Chamber', ARRAY[0,0.5], '#ffc000', NOW()),
-('Front Chamber(Entrance)', ARRAY[0,0.5], '#ffc000', NOW()),
-('Front Chamber(Exit)', ARRAY[0,0.5], '#ffc000', NOW()),
+('Front Chamber (Entrance)', ARRAY[0,0.5], '#ffc000', NOW()),
+('Front Chamber (Exit)', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Heating Zone 1,2', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Heating Zone 3,4', ARRAY[0,0.5], '#ffc000', NOW()),
-('Heating Zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
-('Heating Zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
-('Heating Zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
-('Heating Zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating zone 1', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating zone 2', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating zone 3', ARRAY[0,0.5], '#ffc000', NOW()),
+('Heating zone 4', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Exit Zone', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Keeping Zone', ARRAY[0,0.5], '#ffc000', NOW()),
 ('Keeping Heat chamber', ARRAY[0,0.5], '#ffc000', NOW()),
@@ -725,6 +733,9 @@ VALUES
 ('Heating Left ATM Zone 3', 0.18, 0.28, '#ffffff'),
 ('Heating Right ATM Zone 4', 0.18, 0.28, '#ffffff'),
 ('Heating Left ATM Zone 4', 0.18, 0.28, '#ffffff'),
+('Blast Cooling 1', 0.18, 0.28, '#ffffff'),
+('Blast Cooling 2', 0.18, 0.28, '#ffffff'),
+('Blast Cooling 3', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Right Front 1', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Right Front 2', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Right Front 3', 0.18, 0.28, '#ffffff'),
@@ -738,14 +749,14 @@ VALUES
 ('Blast Cooling Left Rear 2', 0.18, 0.28, '#ffffff'),
 ('Blast Cooling Left Rear 3', 0.18, 0.28, '#ffffff'),
 ('Front Chamber', 0.18, 0.28, '#ffffff'),
-('Front Chamber(Entrance)', 0.18, 0.28, '#ffffff'),
-('Front Chamber(Exit)', 0.18, 0.28, '#ffffff'),
+('Front Chamber (Entrance)', 0.18, 0.28, '#ffffff'),
+('Front Chamber (Exit)', 0.18, 0.28, '#ffffff'),
 ('Heating Zone 1,2', 0.18, 0.28, '#ffffff'),
 ('Heating Zone 3,4', 0.18, 0.28, '#ffffff'),
-('Heating Zone 1', 0.18, 0.28, '#ffffff'),
-('Heating Zone 2', 0.18, 0.28, '#ffffff'),
-('Heating Zone 3', 0.18, 0.28, '#ffffff'),
-('Heating Zone 4', 0.18, 0.28, '#ffffff'),
+('Heating zone 1', 0.18, 0.28, '#ffffff'),
+('Heating zone 2', 0.18, 0.28, '#ffffff'),
+('Heating zone 3', 0.18, 0.28, '#ffffff'),
+('Heating zone 4', 0.18, 0.28, '#ffffff'),
 ('Exit Zone', 0.18, 0.28, '#ffffff'),
 ('Keeping Zone', 0.18, 0.28, '#ffffff'),
 ('Keeping Heat chamber', 0.18, 0.28, '#ffffff'),

@@ -29,7 +29,7 @@ type Props = {
   onoffUrlBase: string;
 };
 
-export default function Allcondition({
+export default function Amain({
   dataUrl,
   statusUrlBase,
   graphUrlBase,
@@ -207,11 +207,6 @@ export default function Allcondition({
             />
           </svg>
         </Link>
-        <div>
-          <p className="text-sm text-gray-500 text-right pr-3">
-            Page {currentIndex + 1} of {maxIndex + 1}
-          </p>
-        </div>
       </div>
     </div>
   );
