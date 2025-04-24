@@ -38,7 +38,6 @@ export default function Amain({
   const [statusData, setStatusData] = useState<{ [key: string]: number }>({});
   const [finData, setFinData] = useState<FinItem[]>([]);
 
-  // แผนที่แสดง label ตาม dataUrl
   const labelMap: { [key: string]: string } = {
     "/api/temp": "FURNACE TEMP(°c)",
     "/api/rc-fan": "RC FAN(Hz)",
@@ -78,6 +77,9 @@ export default function Amain({
     };
 
     fetchData();
+    const interval = setInterval(fetchData, 2000);
+
+  return () => clearInterval(interval);
   }, [dataUrl, onoffUrlBase]);
 
   useEffect(() => {
@@ -145,7 +147,7 @@ export default function Amain({
                 <td className="py-2 px-4">
                   <ActualGauge url={getGaugeUrl(item.item)} />
                 </td>
-                <td className="py-2 px-4 flex justify-center items-center">
+                <td className="py-2 px-4 flex justify-center items-center text-4xl">
                   {statusData[item.item] === 1 ? (
                     <FaCircle className="text-red-500" />
                   ) : (

@@ -26,7 +26,7 @@ export default function Rccondition() {
 
   // useEffect(() => {
   //     mcData.forEach((item) => {
-  //         axios.get(`http://localhost:3000/api/status-actual/${encodeURIComponent(item.item)}`)
+  //         axios.get(`/api/status-actual/${encodeURIComponent(item.item)}`)
   //             .then((res) => {
   //                 setStatusData(prevStatusData => ({
   //                     ...prevStatusData,

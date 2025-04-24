@@ -46,7 +46,7 @@ export default function Fincondition() {
   }, []);
 
   const getApiUrl = (itemName: string) =>
-    `http://localhost:3000/api/fin/${encodeURIComponent(itemName)}`;
+    `/api/fin/${encodeURIComponent(itemName)}`;
 
   return (
     <div className="mt-23 h-[90vh] w-full overflow-y-auto
@@ -92,7 +92,7 @@ export default function Fincondition() {
                 <td className={`py-2 px-4 text-center ${textColorClass}`}>
                   {item.mcs}
                 </td>
-                <td className="pl-6 px-4 text-center">
+                <td className="pl-6 px-4 text-center text-4xl">
                   <FaCircle className={isNG ? "text-red-500" : "text-green-500"} />
                 </td>
               </tr>

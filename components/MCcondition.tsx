@@ -26,7 +26,7 @@ export default function MCcondition() {
 
     useEffect(() => {
         mcData.forEach((item) => {
-            axios.get(`http://localhost:3000/api/status-mactual/${encodeURIComponent(item.item)}`)
+            axios.get(`/api/status-mactual/${encodeURIComponent(item.item)}`)
                 .then((res) => {
                     setStatusData(prevStatusData => ({
                         ...prevStatusData,
@@ -66,18 +66,18 @@ export default function MCcondition() {
                             <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
                             <td className="py-2 px-4 whitespace-nowrap">
                                 <Line url={
-                                    item.item === "After cut air blow 1" ? "http://localhost:3000/api/after-cut-1" :
-                                    item.item === "After cut air blow 2" ? "http://localhost:3000/api/after-cut-2" :
-                                    item.item === "Twist cut air blow 1" ? "http://localhost:3000/api/twist-cut-1" :
-                                    item.item === "Twist cut air blow 2" ? "http://localhost:3000/api/twist-cut-2" :
-                                    item.item === "Tension pressure" ? "http://localhost:3000/api/tension-p" :
-                                    item.item === "Tension adjust press" ? "http://localhost:3000/api/tension-ap" : ""
+                                    item.item === "After cut air blow 1" ? "/api/after-cut-1" :
+                                    item.item === "After cut air blow 2" ? "/api/after-cut-2" :
+                                    item.item === "Twist cut air blow 1" ? "/api/twist-cut-1" :
+                                    item.item === "Twist cut air blow 2" ? "/api/twist-cut-2" :
+                                    item.item === "Tension pressure" ? "/api/tension-p" :
+                                    item.item === "Tension adjust press" ? "/api/tension-ap" : ""
                                 } />
                             </td>
                             <td className="py-2 px-4">
-                                <ActualGauge url={`http://localhost:3000/api/gauge-set/${encodeURIComponent(item.item)}`} />
+                                <ActualGauge url={`/api/gauge-set/${encodeURIComponent(item.item)}`} />
                             </td>
-                            <td className="py-2 px-4">
+                            <td className="py-2 px-4 text-4xl">
                                 {statusData[item.item] === 1 ? (
                                     <FaCircle className="text-red-500" />
                                 ) : (

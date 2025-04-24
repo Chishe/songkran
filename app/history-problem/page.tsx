@@ -19,7 +19,7 @@ export default function HistoryProblem() {
     const [history, setHistory] = useState<HistoryItem[]>([]);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/history-problem')
+        fetch('/api/history-problem')
             .then((res) => res.json())
             .then((data: HistoryItem[]) => setHistory(data))
             .catch((err) => console.error("Failed to load history:", err));

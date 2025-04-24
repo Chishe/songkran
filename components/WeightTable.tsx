@@ -9,7 +9,7 @@ const WeightTable = () => {
   const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/weights')
+    axios.get('/api/weights')
       .then(response => {
         setRowData(response.data);
       })

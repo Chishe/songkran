@@ -13,7 +13,15 @@ export async function GET() {
 
     client.release();
 
-    return NextResponse.json(res.rows);
+    const records = res.rows.map(row => {
+      const randomItem = (Math.random() * (0.26 - 0.2) + 0.2).toFixed(2);
+      return {
+        ...row,
+        item: parseFloat(randomItem),
+      };
+    });
+
+    return NextResponse.json(records);
   } catch (error) {
     console.error('Database error:', error);
     return NextResponse.json({ error: 'Database error' }, { status: 500 });
