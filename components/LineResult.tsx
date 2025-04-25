@@ -71,9 +71,8 @@ export default function Line({ url }: { url: string }) {
 
   const pointCount = timeStamps.length;
 
-  // เพิ่ม label ปลอมให้ threshold ถ้ามีแค่ 1 จุด เพื่อให้เส้น "ยาว"
   const labels = pointCount === 1
-    ? [timeStamps[0], timeStamps[0] + ' '] // label ปลอม
+    ? [timeStamps[0], timeStamps[0] + ' ']
     : timeStamps;
   
   const data = {
@@ -81,7 +80,7 @@ export default function Line({ url }: { url: string }) {
     datasets: [
       {
         label: itemName,
-        data: itemValues, // แสดงเท่าที่มี
+        data: itemValues,
         backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 2,
         tension: 0.3,
