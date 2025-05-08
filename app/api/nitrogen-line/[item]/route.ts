@@ -1,67 +1,55 @@
-// import { NextRequest } from 'next/server';
-// import { pool } from '@/lib/db';
-
-// interface Params {
-//   item: string;
-// }
-
-// export async function GET(req: NextRequest, { params }: { params: Params }) {
-//   const { item } = params;
-//   const decodedItem = decodeURIComponent(item);
-
-//   try {
-//     const result = await pool.query(
-//       `SELECT itemname,time,item FROM nitrogen_line WHERE itemname = $1 ORDER BY time DESC LIMIT 10`,
-//       [decodedItem]
-//     );
-
-//     if (result.rows.length === 0) {
-//       return new Response(JSON.stringify({ error: `No data found for item: ${decodedItem}` }), {
-//         status: 404,
-//         headers: { 'Content-Type': 'application/json' },
-//       });
-//     }
-
-//     const data = result.rows.map((row: any) => ({
-//       itemname: row.itemname,
-//       time: row.time,
-//       item: row.item,
-//     }));
-
-//     return new Response(JSON.stringify(data), {
-//       status: 200,
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-//   } catch (err) {
-//     console.error('Database error:', err);
-//     return new Response(JSON.stringify({ error: 'Internal server error' }), {
-//       status: 500,
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-//   }
-// }
-import { NextRequest } from 'next/server';
+import { NextRequest } from "next/server";
 
 interface Params {
   item: string;
 }
 
-export async function GET(req: NextRequest, { params }: { params: Params }) {
+const ranges: Record<string, string[]> = {
+  "0-20": ["Front Chamber (Entrance)","Front Chamber (Exit)","Heating zone 1,2","Heating Zone 3,4"],
+  "130-170": ["Keeping Zone"]
+};
+function getRandomInRange(min: number, max: number) {
+  return Math.round(Math.random() * (max - min) + min);
+}
+
+function findMinMax(itemname: string): [number, number] | null {
+  for (const rangeKey in ranges) {
+    if (ranges[rangeKey].includes(itemname)) {
+      const [minStr, maxStr] = rangeKey.split("-");
+      const min = parseFloat(minStr);
+      const max = parseFloat(maxStr);
+      return [Math.min(min, max), Math.max(min, max)];
+    }
+  }
+  return null;
+}
+
+function generateFixedTimes(): string[] {
+  return [
+    "14:30", "13:54", "13:06", "12:18", "11:30",
+    "10:42", "09:54", "09:06", "08:18", "07:30"
+  ];
+}
+
+
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Params }
+) {
   const { item } = params;
-  const decodedItem = decodeURIComponent(item);
+  const minMax = findMinMax(item);
 
-  const getRandomItemValue = () => {
-    return parseFloat((591 + Math.random() * 4).toFixed(2));
-  };
+  if (!minMax) {
+    return new Response(JSON.stringify({ error: "Item not found" }), { status: 404 });
+  }
 
-  const mockData = Array.from({ length: 10 }, (_, i) => ({
-    itemname: decodedItem,
-    time: `11.${(i + 1).toString().padStart(2, '0')}`,
-    item: getRandomItemValue(),
+  const [min, max] = minMax;
+
+  const result = generateFixedTimes().map(time => ({
+    itemname: item,
+    time: time,
+    item: getRandomInRange(min, max),
   }));
 
-  return new Response(JSON.stringify(mockData), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return new Response(JSON.stringify(result), { status: 200, headers: { "Content-Type": "application/json" } });
 }

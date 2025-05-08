@@ -43,9 +43,6 @@ export default function Fincondition() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 2000);
-
-    return () => clearInterval(interval);
   }, []);
 
   const getApiUrl = (itemName: string) =>

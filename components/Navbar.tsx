@@ -12,21 +12,25 @@ export default function Navbar() {
     const getPageTitle = () => {
         switch (pathname) {
             case "/machine-condition":
-                return "Machine condition";
+                return "Machine condition outter fin forming";
             case "/document-record":
             case "/document-record-1":
             case "/document-record-2":
             case "/document-record-3":
             case "/document-record-4":
             case "/document-record-5":
-                return "Document record";
+                return "Machine condition NB furnace";
+            case "/suface-condition":
+                return "Suface treatment condition";
             case "/history-problem":
                 return "History problem";
+            case "/quality-result-surface":
+                return "Quality result Surface";
             default:
                 return "Quality result";
         }
     };
-    
+
 
     const getLinkClass = (path: string) =>
         `hover:underline ${pathname === path ? 'text-red-500 font-bold' : ''}`;
@@ -55,13 +59,15 @@ export default function Navbar() {
                 <div className="flex gap-4">
                     <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Over detail</Link></li>
                     <li><Link href="/" className={getLinkClass("/")}>Quality result</Link></li>
-                    <li><Link href="/document-record" className={getLinkClass("/document-record")}>Document record</Link></li>
+                    <li><Link href="/quality-result-surface" className={getLinkClass("/quality-result-surface")}>Quality result Surface</Link></li>
+                    <li><Link href="/document-record" className={getLinkClass("/document-record")}>Machine condition NB furnace</Link></li>
                     <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Video record</Link></li>
+                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Production</Link></li>
                 </div>
                 <div className="flex gap-4">
-                    <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Production</Link></li>
                     <li><Link href="#" className="hover:underline text-gray-500" aria-disabled>Maintenance</Link></li>
-                    <li><Link href="/machine-condition" className={getLinkClass("/machine-condition")}>Machine condition</Link></li>
+                    <li><Link href="/suface-condition" className={getLinkClass("/suface-condition")}>Suface treatment condition</Link></li>
+                    <li><Link href="/machine-condition" className={getLinkClass("/machine-condition")}>Machine condition outter fin forming</Link></li>
                     <li><Link href="/history-problem" className={getLinkClass("/history-problem")}>History problem</Link></li>
                 </div>
             </ul>

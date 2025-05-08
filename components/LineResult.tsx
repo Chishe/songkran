@@ -34,6 +34,22 @@ export default function Line({ url }: { url: string }) {
   const [minThreshold, setMinThreshold] = useState<number | null>(null);
   const [maxThreshold, setMaxThreshold] = useState<number | null>(null);
 
+  const [adjustedMinThreshold, setAdjustedMinThreshold] = useState<number | null>(null);
+  const [adjustedMaxThreshold, setAdjustedMaxThreshold] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (minThreshold !== null) {
+      setAdjustedMinThreshold(minThreshold -0.1); 
+    } else {
+      setAdjustedMinThreshold(null);
+    }
+
+    if (maxThreshold !== null) {
+      setAdjustedMaxThreshold(maxThreshold +0.1); 
+    } else {
+      setAdjustedMaxThreshold(null);
+    }
+  }, [minThreshold, maxThreshold]);
   useEffect(() => {
     fetch(url)
       .then(res => res.json())
@@ -44,37 +60,37 @@ export default function Line({ url }: { url: string }) {
         const currentItem = reversed[0]?.itemname || '';
         setItemName(currentItem);
         fetch('/api/threshold')
-        .then(res => res.json())
-        .then(thresholds => {
-          const threshold = thresholds.find(
-            (t: any) => t.item.trim().toLowerCase() === currentItem.trim().toLowerCase()
-          );
-          if (threshold) {
-            setPointColor(threshold.color);
-            setMinThreshold(threshold.min);
-            setMaxThreshold(threshold.max);
-            console.log('Min Threshold:', threshold.min);
-            console.log('Max Threshold:', threshold.max);
-          } else {
-            console.warn('Threshold not found for:', currentItem);
-          }
-        })
-        .catch(err => {
-          console.error('Failed to fetch thresholds:', err);
-        });
+          .then(res => res.json())
+          .then(thresholds => {
+            const threshold = thresholds.find(
+              (t: any) => t.item.trim().toLowerCase() === currentItem.trim().toLowerCase()
+            );
+            if (threshold) {
+              setPointColor(threshold.color);
+              setMinThreshold(threshold.min);
+              setMaxThreshold(threshold.max);
+              console.log('Min Threshold:', threshold.min);
+              console.log('Max Threshold:', threshold.max);
+            } else {
+              console.warn('Threshold not found for:', currentItem);
+            }
+          })
+          .catch(err => {
+            console.error('Failed to fetch thresholds:', err);
+          });
       })
       .catch(err => {
         console.error('Failed to fetch data:', err);
       });
   }, [url]);
-  
+
 
   const pointCount = timeStamps.length;
 
   const labels = pointCount === 1
     ? [timeStamps[0], timeStamps[0] + ' ']
     : timeStamps;
-  
+
   const data = {
     labels,
     datasets: [
@@ -92,27 +108,27 @@ export default function Line({ url }: { url: string }) {
       },
       ...(maxThreshold !== undefined && maxThreshold !== null
         ? [{
-            label: 'Max Threshold',
-            data: pointCount === 1
-              ? [maxThreshold, maxThreshold]
-              : Array(pointCount).fill(maxThreshold),
-            borderColor: '#ff0000',
-            borderWidth: 2,
-            pointRadius: 0,
-            fill: false
-          }]
+          label: 'Max Threshold',
+          data: pointCount === 1
+            ? [maxThreshold, maxThreshold]
+            : Array(pointCount).fill(maxThreshold),
+          borderColor: '#ff0000',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false
+        }]
         : []),
       ...(minThreshold !== undefined && minThreshold !== null
         ? [{
-            label: 'Min Threshold',
-            data: pointCount === 1
-              ? [minThreshold, minThreshold]
-              : Array(pointCount).fill(minThreshold),
-            borderColor: '#ff0000',
-            borderWidth: 2,
-            pointRadius: 0,
-            fill: false
-          }]
+          label: 'Min Threshold',
+          data: pointCount === 1
+            ? [minThreshold, minThreshold]
+            : Array(pointCount).fill(minThreshold),
+          borderColor: '#ff0000',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false
+        }]
         : [])
     ]
   };
@@ -121,12 +137,12 @@ export default function Line({ url }: { url: string }) {
       const range = maxThreshold - minThreshold;
       if (range < 1) return 0.01;
       if (range < 10) return 0.1;
-      if (range < 100) return 1;
+      if (range < 100) return 25;
       return 10;
     }
     return 1;
   };
-  
+
   const stepSize = getStepSize();
 
   const options = {
@@ -145,8 +161,8 @@ export default function Line({ url }: { url: string }) {
     },
     scales: {
       y: {
-        min: minThreshold,
-        max: maxThreshold,
+        min: adjustedMinThreshold !== null ? adjustedMinThreshold : 0,
+        max: adjustedMaxThreshold !== null ? adjustedMaxThreshold : 100,
         ticks: {
           stepSize: stepSize,
           callback: (value: number) => value.toFixed(2),

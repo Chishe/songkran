@@ -1,28 +1,12 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import { pool } from "@/lib/db";
-
-// export async function GET() {
-//   try {
-//     const client = await pool.connect();
-//     const res = await client.query(`
-//       SELECT * FROM bz_o2_b
-//       ORDER BY id ASC
-//     `);
-//     client.release();
-//     return NextResponse.json(res.rows);
-//   } catch (error) {
-//     return NextResponse.json({ error: "Database error" }, { status: 500 });
-//   }
-// }
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   const mockData = [
-    { id: 1, item: "Heating zone 1", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 2, item: "Heating zone 2", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 3, item: "Heating zone 3", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 4, item: "Heating zone 4", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 5, item: "Keeping Zone", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 1, item: "Heatingx zone 1", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 2, item: "Heatingx zone 2", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 3, item: "Heatingx zone 3", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 4, item: "Heatingx zone 4", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 5, item: "Keepingx Zone", created_at: "2025-04-23T07:59:42.430Z" },
     { id: 6, item: "Exit Zone", created_at: "2025-04-23T07:59:42.430Z" },
   ];
 

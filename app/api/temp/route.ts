@@ -1,30 +1,14 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import { pool } from "@/lib/db";
-
-// export async function GET() {
-//   try {
-//     const client = await pool.connect();
-//     const res = await client.query(`
-//       SELECT * FROM public.bz_temp
-//       ORDER BY id ASC
-//     `);
-//     client.release();
-//     return NextResponse.json(res.rows);
-//   } catch (error) {
-//     return NextResponse.json({ error: "Database error" }, { status: 500 });
-//   }
-// }
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   const mockData = [
     { id: 1, item: "After Burner", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 2, item: "Degreasing Zone 1", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 3, item: "Degreasing Zone 2", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 4, item: "Degreasing Zone 3", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 5, item: "Debinder Zone 1", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 6, item: "Debinder Zone 2", created_at: "2025-04-23T07:59:42.430Z" },
-    { id: 7, item: "Debinder Zone 3", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 2, item: "Degreasing zone 1", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 3, item: "Degreasing zone 2", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 4, item: "Degreasing zone 3", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 5, item: "Debinderr Zone 1", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 6, item: "Debinderr Zone 2", created_at: "2025-04-23T07:59:42.430Z" },
+    { id: 7, item: "Debinderr Zone 3", created_at: "2025-04-23T07:59:42.430Z" },
     { id: 8, item: "Front Chamber", created_at: "2025-04-23T07:59:42.430Z" },
     { id: 9, item: "Heating Right ATM Zone 1", created_at: "2025-04-23T07:59:42.430Z" },
     { id: 10, item: "Heating Left ATM Zone 1", created_at: "2025-04-23T07:59:42.430Z" },

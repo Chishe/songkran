@@ -26,24 +26,24 @@ export default function History({ url }: Props) {
   }, [url]);
 
   return (
-    <div className="mt-23 p-4 border-3 border-[#0070C0] text-xs">
+    <div className="mt-23 p-4 border-3 border-[#0070C0] text-xs h-[89.9vh]">
       <h2 className="text-xl font-bold mb-4">History:</h2>
-      <table className="min-w-full table-auto border-collapse text-center">
+      <table className="w-full table-auto border-collapse text-center">
         <thead>
           <tr className="text-yellow-300">
-            <th className="py-2 px-4 whitespace-nowrap">Date</th>
-            <th className="py-2 px-4 whitespace-nowrap">Time</th>
-            <th className="py-2 px-4 whitespace-nowrap">Item</th>
-            <th className="py-2 px-4 whitespace-nowrap">Status</th>
+            <th className="py-2 px-4">Date</th>
+            <th className="py-2 px-4">Time</th>
+            <th className="py-2 px-4">Item</th>
+            <th className="py-2 px-4">Status</th>
           </tr>
         </thead>
         <tbody>
           {historyData.map((item) => (
             <tr key={item.id}>
-              <td className="py-2 px-4 whitespace-nowrap">{item.date}</td>
-              <td className="py-2 px-4 whitespace-nowrap">{item.time}</td>
-              <td className="py-2 px-4 whitespace-nowrap">{item.item}</td>
-              <td className="py-2 px-4 whitespace-nowrap">
+              <td className="py-2 px-4">{item.date}</td>
+              <td className="py-2 px-4">{item.time}</td>
+              <td className="py-2 px-4">{item.item}</td>
+              <td className="py-2 px-4">
                 <div className="flex justify-center items-center">
                   {item.status === "NG" ? (
                     <FaCircle className="text-red-500" />

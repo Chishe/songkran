@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaCircle } from "react-icons/fa";
 import LineResult from "@/components/LineResult";
@@ -59,16 +59,16 @@ export default function Amain({
         ]);
 
         setmcData(mainRes.data);
+        const statusMap = statusRes.data.reduce((acc: any, curr: any) => {
+          acc[curr.itemname] = curr.status;
+          return acc;
+        }, {});
+        setStatusData(statusMap);
 
-        const merged = mainRes.data.map((item: FinItem) => {
-          const statusItem = statusRes.data.find(
-            (s: any) => s.itemname === item.item
-          );
-          return {
-            ...item,
-            status: statusItem?.status ?? 0,
-          };
-        });
+        const merged = mainRes.data.map((item: FinItem) => ({
+          ...item,
+          status: statusMap[item.item] ?? 0,
+        }));
 
         setFinData(merged);
       } catch (error) {
@@ -77,26 +77,7 @@ export default function Amain({
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 2000);
-
-  return () => clearInterval(interval);
   }, [dataUrl, onoffUrlBase]);
-
-  useEffect(() => {
-    mcData.forEach((item) => {
-      axios
-        .get(`${statusUrlBase}${encodeURIComponent(item.item)}`)
-        .then((res) => {
-          setStatusData((prev) => ({
-            ...prev,
-            [item.item]: res.data.status,
-          }));
-        })
-        .catch((error) => {
-          console.error(`Error fetching status for ${item.item}:`, error);
-        });
-    });
-  }, [mcData, statusUrlBase]);
 
   const getGraphUrl = (itemName: string) =>
     `${graphUrlBase}${encodeURIComponent(itemName)}`;
@@ -148,7 +129,10 @@ export default function Amain({
                   <ActualGauge url={getGaugeUrl(item.item)} />
                 </td>
                 <td className="py-2 px-4 flex justify-center items-center text-4xl">
-                  {statusData[item.item] === 1 ? (
+                  {/* Check if the item is "After Burner" and display a red circle */}
+                  {item.item === "0" ? (
+                    <FaCircle className="text-red-500" />
+                  ) : statusData[item.item] === 1 ? (
                     <FaCircle className="text-red-500" />
                   ) : (
                     <FaCircle className="text-green-500" />

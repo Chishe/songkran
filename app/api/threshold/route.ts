@@ -1,735 +1,117 @@
-// import { NextRequest, NextResponse } from 'next/server';
-// import { pool } from '@/lib/db';
+// import { NextResponse } from 'next/server';
+
+// interface GroupedItem {
+//   item: string;
+//   min: number;
+//   max: number;
+//   color: string;
+//   created_at: string;
+// }
+
+// const created_at = "2025-04-24T09:19:25.911Z";
+// const defaultColor = "#93ff93";
+
+// const groupedItems: Record<string, string[]> = {
+//   "530-570": ["After Burner"],
+//   "255-295": ["Degreasing zone 1"],
+//   "258-298": ["Degreasing zone 2", "Degreasing zone 3"],
+//   "350-390": ["Debinderr zone 1"],
+//   "370-410": ["Debinderr zone 2"],
+//   "375-415": ["Debinderr zone 3"],
+//   "455-505": ["Front Chamber"],
+//   "594-598": ["Heating Right ATM Zone 1", "Heating Left ATM Zone 1"],
+//   "600-604": ["Heating Right ATM Zone 2", "Heating Left ATM Zone 2"],
+//   "601-605": ["Heating Right ATM Zone 3", "Heating Left ATM Zone 3"],
+//   "592-596": ["Heating Right ATM Zone 4", "Heating Left ATM Zone 4"],
+//   "540-560": ["Keeping Heat chamber"],
+//   "490-497": ["Exit Chamber"],
+//   "1925-1945": ["Conveyer Speed (mm/min)"],
+//   "59-61": ["Degreasings Zone 1", "Degreasings Zone 2", "Degreasings Zone 3"],
+//   "55-60": ["Debinders Zone 1"],
+//   "20-25": ["Debinders Zone 2"],
+//   "15-20": ["Debinders Zone 3"],
+//   "23-28": ["Heating zone 1"],
+//   "40-45": ["Heating zone 2", "Heating zone 3"],
+//   "54-60": ["Heating zone 4"],
+//   "53-60": ["Blast Cooling 1", "Blast Cooling 2", "Blast Cooling 3"],
+//   "25-35": ["Blast Cooling Right Front 1", "Blast Cooling Left Front 1", "Blast Cooling Right Rear 1", "Blast Cooling Left Rear 1"],
+//   "50-60": ["Blast Cooling Right Front 2", "Blast Cooling Left Front 2", "Blast Cooling Right Rear 2", "Blast Cooling Left Rear 2",
+//     "Blast Cooling Right Front 3", "Blast Cooling Left Front 3", "Blast Cooling Right Rear 3", "Blast Cooling Left Rear 3"],
+//   "0-20": ["Front Chamber (Entrance)", "Front Chamber (Exit)", "Heating zone 1,2", "Heating Zone 3,4"],
+//   "130-170": ["Keeping Zone"],
+//   "1-101": ["Heatingx zone 1",
+//     "Heatingx zone 2",
+//     "Heatingx zone 3",
+//     "Heatingx zone 4",
+//     "Keepingx Zone",
+//     "Exit Zone", "Keeping Zones", "Exit Zone"
+//   ],
+//   "0.18-0.28": [
+//     "TG446600-3482", "TG446620-1700", "TG447610-8901", "TG446620-8940",
+//     "TG446600-3941", "TG447610-0791", "TG446610-6190", "TG446600-3832",
+//     "TG447610-1881", "TG447610-2941", "TG447610-9250", "TG446600-7511",
+//     "TG447610-8610", "TG446600-4431", "TG446610-4440", "TG446600-4311",
+//     "TG447610-4780", "TG446610-0751", "TG446620-3520", "TG446620-0140",
+//     "TG446620-7530", "TG446620-1750", "TG446600-7181", "TG446620-7560",
+//     "TG446610-6330", "TG446600-0582", "TG446620-6530", "TG446620-0600",
+//     "TG446620-0620", "TG447610-8601", "TG447610-9650", "TG446610-4000",
+//     "TG446610-9880", "TG446610-4630", "TG446610-4450", "TG446610-3930",
+//     "TG446610-6770", "TG447610-4850", "TG446620-2020", "TG446620-6840",
+//     "TG446610-6800", "TG446620-0050", "TG446610-8170", "TG446610-1050",
+//     "TG446620-4410", "TG446620-2320", "TG447610-6740", "TG446610-6090",
+//     "TG447610-9220", "TG447610-9201", "TG446610-4961", "Tension adjust press",
+//     "Tension pressure", "Twist cut air blow 2", "Twist cut air blow 1",
+//     "After cut air blow 2", "After cut air blow 1"
+//   ]
+// };
 
 // export async function GET() {
-//   try {
-//     const client = await pool.connect();
+//   const allItems: GroupedItem[] = [];
 
-//     const res = await client.query(`
-//       SELECT item,min,max,color,created_at FROM Threshold
-//       ORDER BY id DESC 
-//     `);
-
-//     client.release();
-
-//     return NextResponse.json(res.rows);
-//   } catch (error) {
-//     console.error('Database error:', error);
-//     return NextResponse.json({ error: 'Database error' }, { status: 500 });
+//   for (const [rangeKey, items] of Object.entries(groupedItems)) {
+//     const [min, max] = rangeKey.split('-').map(Number);
+//     items.forEach(item => {
+//       allItems.push({ item, min, max, color: defaultColor, created_at });
+//     });
 //   }
+
+//   return NextResponse.json(allItems);
 // }
+import { pool } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
-  const mockData = [
-    {
-      "item": "Conveyer Speed (mm/min)",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Exit Chamber",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Keeping Heat chamber",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Keeping Zone",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Exit Zone",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating zone 4",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating zone 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating zone 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating zone 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Zone 3,4",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Zone 1,2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Front Chamber (Exit)",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Front Chamber (Entrance)",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Front Chamber",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Rear 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Rear 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Rear 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Front 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Front 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Left Front 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Rear 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Rear 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Rear 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Front 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Front 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling Right Front 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Blast Cooling 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Left ATM Zone 4",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Right ATM Zone 4",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Left ATM Zone 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Right ATM Zone 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Left ATM Zone 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Right ATM Zone 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Left ATM Zone 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Heating Right ATM Zone 1",
-        "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Debinder Zone 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Debinder Zone 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Debinder Zone 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Degreasing Zone 3",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Degreasing Zone 2",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Degreasing Zone 1",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "After Burner",
-      "min": 590,
-      "max": 600,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-3482",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-1700",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-8901",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#969696",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-8940",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#99d266",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-3941",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-0791",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-6190",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-3832",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-1881",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#7575d1",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-2941",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#93ff93",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-9250",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffc000",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-7511",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-8610",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-4431",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#969696",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-4440",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#99d266",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-4311",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-4780",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-0751",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-3520",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-0140",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#7575d1",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-7530",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#93ff93",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-1750",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffc000",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-7181",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-7560",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-6330",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#969696",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446600-0582",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#99d266",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-6530",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-0600",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-0620",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-8601",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-9650",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#7575d1",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-4000",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#93ff93",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-9880",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffc000",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-4630",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-4450",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-3930",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#969696",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-6770",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#99d266",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-4850",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-2020",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-6840",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-6800",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-0050",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#7575d1",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-8170",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#93ff93",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-1050",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffc000",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-4410",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446620-2320",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffff",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-6740",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#969696",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-6090",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#99d266",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-9220",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG447610-9201",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "TG446610-4961",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Tension adjust press",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffffcc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Tension pressure",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ff66cc",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Twist cut air blow 2",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#00b0ef",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "Twist cut air blow 1",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#7575d1",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "After cut air blow 2",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#93ff93",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  },
-  {
-      "item": "After cut air blow 1",
-      "min": 0.18,
-      "max": 0.28,
-      "color": "#ffc000",
-      "created_at": "2025-04-24T09:19:25.911Z"
-  }
-  ];
+interface GroupedItem {
+  item: string;
+  min: number;
+  max: number;
+  color: string;
+  created_at: string;
+}
 
-  return NextResponse.json(mockData);
+const defaultColor = "#93ff93";
+const created_at = "2025-04-24T09:19:25.911Z";
+
+export async function GET() {
+  const client = await pool.connect();
+  try {
+    const res = await client.query(`
+      SELECT item, min, max, color, created_at
+      FROM threshold
+    `);
+
+    const allItems: GroupedItem[] = res.rows.map(row => ({
+      item: row.item,
+      min: row.min,
+      max: row.max,
+      color: row.color || defaultColor, 
+      created_at: row.created_at || created_at,
+    }));
+
+    return NextResponse.json(allItems);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+  } finally {
+    client.release();
+  }
 }

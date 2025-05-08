@@ -1,19 +1,24 @@
 import Link from "next/link";
 import History from "@/components/History";
 import Amain from "@/components/Amain";
-export default function Documentrecord_5() {
+
+export default function Documentrecord() {
   return (
-    <div className="h-screen flex gap-2">
-      <History url="/api/history" />
-      <div className="h-screen w-full flex-col">
+    <div className="h-screen w-full flex flex-col md:flex-row gap-2">
+      <div className="flex-1 h-full w-1/4">
+        <History url="/api/history-6" />
+      </div>
+
+      <div className="flex-1 h-full w-3/4">
         <Amain
-          dataUrl="/api/o2-b"
-          statusUrlBase="/api/o2-b-actual/"
-          graphUrlBase="/api/o2-bf-line/"
-          gaugeUrlBase="/api/gauge-o2-bf/"
-          onoffUrlBase="/api/status-o2-b"
+                dataUrl="/api/o2-b"
+                statusUrlBase="/api/o2-b-actual/"
+                graphUrlBase="/api/o2-bf-line/"
+                gaugeUrlBase="/api/gauge-o2-bf/"
+                onoffUrlBase="/api/status-o2-b"
         />
       </div>
+
       <div className="fixed bottom-4 left-4 flex gap-2 z-[100]">
         <Link
           href="/document-record-4"

@@ -1,12 +1,16 @@
 import Link from "next/link";
 import History from "@/components/History";
 import Amain from "@/components/Amain";
-export default function Documentrecord_2() {
+
+export default function Documentrecord() {
   return (
-    <div className="h-screen flex gap-2">
-      <History url="/api/history" />
-      <div className="h-screen w-full flex-col">
-        <Amain
+    <div className="h-screen w-full flex flex-col md:flex-row gap-2">
+      <div className="flex-1 h-full w-1/4">
+      <History url="/api/history-3" />
+      </div>
+
+      <div className="flex-1 h-full w-3/4">
+      <Amain
           dataUrl="/api/ex-fan"
           statusUrlBase="/api/ex-actual/"
           graphUrlBase="/api/ex-fan-line/"
@@ -14,6 +18,7 @@ export default function Documentrecord_2() {
           onoffUrlBase="/api/status-ex"
         />
       </div>
+
       <div className="fixed bottom-4 left-4 flex gap-2 z-[100]">
         <Link
           href="/document-record-1"
@@ -36,7 +41,7 @@ export default function Documentrecord_2() {
           <span className="ml-1 font-bold text-lg">Back</span>
         </Link>
         <Link
-          href="/document-record-3"
+          href="/document-record-2"
           className="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50"
         >
           <span className="mr-1 font-bold text-lg">Next</span>
