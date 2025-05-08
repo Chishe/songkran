@@ -40,6 +40,33 @@ VALUES
   ('After cut air blow 2', 0.20, '11.09'),
   ('After cut air blow 2', 0.20, '11.10');
 
+CREATE TABLE temp (
+  id SERIAL PRIMARY KEY,
+  item TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO temp (item, created_at) VALUES
+('After Burner', '2025-04-23T07:59:42.430Z'),
+('Degreasing zone 1', '2025-04-23T07:59:42.430Z'),
+('Degreasing zone 2', '2025-04-23T07:59:42.430Z'),
+('Degreasing zone 3', '2025-04-23T07:59:42.430Z'),
+('Debinderr zone 1', '2025-04-23T07:59:42.430Z'),
+('Debinderr zone 2', '2025-04-23T07:59:42.430Z'),
+('Debinderr zone 3', '2025-04-23T07:59:42.430Z'),
+('Front Chamber', '2025-04-23T07:59:42.430Z'),
+('Heating Right ATM Zone 1', '2025-04-23T07:59:42.430Z'),
+('Heating Left ATM Zone 1', '2025-04-23T07:59:42.430Z'),
+('Heating Right ATM Zone 2', '2025-04-23T07:59:42.430Z'),
+('Heating Left ATM Zone 2', '2025-04-23T07:59:42.430Z'),
+('Heating Right ATM Zone 3', '2025-04-23T07:59:42.430Z'),
+('Heating Left ATM Zone 3', '2025-04-23T07:59:42.430Z'),
+('Heating Right ATM Zone 4', '2025-04-23T07:59:42.430Z'),
+('Heating Left ATM Zone 4', '2025-04-23T07:59:42.430Z'),
+('Keeping Heat chamber', '2025-04-23T07:59:42.430Z'),
+('Exit Chamber', '2025-04-23T07:59:42.430Z'),
+('Conveyer Speed (mm/min)', '2025-04-23T07:59:42.430Z');
+
 CREATE TABLE temp_line (
   id SERIAL PRIMARY KEY,
   itemname VARCHAR(255) NOT NULL,

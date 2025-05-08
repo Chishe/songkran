@@ -1,62 +1,47 @@
 import { NextRequest } from "next/server";
-
-const groupedItems: Record<string, string[]> = {
-  "530-570": ["After Burner"],
-  "255-295": ["Degreasing zone 1"],
-  "258-298": ["Degreasing zone 2", "Degreasing zone 3"],
-  "350-390": ["Debinderr Zone 1"],
-  "370-410": ["Debinderr Zone 2"],
-  "375-415": ["Debinderr Zone 3"],
-  "455-505": ["Front Chamber"],
-  "594-598": ["Heating Right ATM Zone 1", "Heating Left ATM Zone 1"],
-  "600-604": ["Heating Right ATM Zone 2", "Heating Left ATM Zone 2"],
-  "601-605": ["Heating Right ATM Zone 3", "Heating Left ATM Zone 3"],
-  "592-596": ["Heating Right ATM Zone 4", "Heating Left ATM Zone 4"],
-  "540-560": ["Keeping Heat chamber"],
-  "490-497": ["Exit Chamber"],
-  "1925-1945": ["Conveyer Speed (mm/min)"]
-};
-
-function findMinMax(itemname: string): [number, number] | null {
-  for (const [rangeKey, itemList] of Object.entries(groupedItems)) {
-    if (itemList.includes(itemname)) {
-      const [min, max] = rangeKey.split("-").map(Number);
-      return [min, max];
-    }
-  }
-  return null;
-}
-
-function getRandomInRange(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
-}
+import { pool } from "@/lib/db";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { itemname: string } }
 ) {
-  const decodedItemname = decodeURIComponent(params.itemname);
+  const { itemname } = await params;
+  const decodedItemname = decodeURIComponent(itemname);
 
   try {
-    const minMax = findMinMax(decodedItemname);
+    const result = await pool.query(
+      `
+        SELECT 
+          t.item, 
+          t.created_at, 
+          th.min, 
+          th.max, 
+          tl.item AS latest_value
+        FROM 
+          threshold th
+        LEFT JOIN 
+          temp_line tl ON th.item = tl.itemname
+        LEFT JOIN 
+          temp t ON th.item = t.item
+        WHERE 
+          th.item = $1
+        ORDER BY 
+          tl.created_at DESC 
+        LIMIT 1
+      `,
+      [decodedItemname]
+    );
 
-    if (!minMax) {
-      return new Response(JSON.stringify({ error: "Item not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
+    if (result.rows.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Item not found or no data available" }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const [min, max] = minMax;
+    const { min, max, latest_value } = result.rows[0];
 
-    let needle: number;
-    if (decodedItemname === "After Burner") {
-      needle = 560;
-    } else if (decodedItemname === "Degreasing zone 1") {
-      needle = 270;
-    } else {
-      needle = Number(((min + max) / 2).toFixed(2));
-    }
+    const needle = latest_value || ((min + max) / 2);
 
     const responseData = {
       needle,
@@ -72,9 +57,9 @@ export async function GET(
     });
   } catch (err) {
     console.error("API Error:", err);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Internal Server Error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
