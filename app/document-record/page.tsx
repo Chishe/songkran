@@ -8,7 +8,7 @@ export default function Documentrecord() {
       <div className="h-screen w-full flex-col">
         <Amain
           dataUrl="/api/temp"
-          statusUrlBase="/api/status-mactual/"
+          statusUrlBase="/api/status-temp/"
           graphUrlBase="/api/temp-line/"
           gaugeUrlBase="/api/gauge-temp/"
           onoffUrlBase="/api/status-temp"

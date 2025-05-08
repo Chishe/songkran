@@ -116,6 +116,18 @@ export default function Line({ url }: { url: string }) {
         : [])
     ]
   };
+  const getStepSize = () => {
+    if (minThreshold !== null && maxThreshold !== null) {
+      const range = maxThreshold - minThreshold;
+      if (range < 1) return 0.01;
+      if (range < 10) return 0.1;
+      if (range < 100) return 1;
+      return 10;
+    }
+    return 1;
+  };
+  
+  const stepSize = getStepSize();
 
   const options = {
     responsive: true,
@@ -133,10 +145,10 @@ export default function Line({ url }: { url: string }) {
     },
     scales: {
       y: {
-        min: 0.15,
-        max: 0.3,
+        min: minThreshold,
+        max: maxThreshold,
         ticks: {
-          stepSize: 0.02,
+          stepSize: stepSize,
           callback: (value: number) => value.toFixed(2),
           color: 'white'
         },
