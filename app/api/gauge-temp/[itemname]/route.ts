@@ -3,10 +3,11 @@ import { pool } from "@/lib/db";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { itemname: string } }
+  context: { params: Promise<Record<string, string>> }
 ) {
-  const { itemname } = await params;
+  const { itemname } = await context.params;
   const decodedItemname = decodeURIComponent(itemname);
+
 
   try {
     const result = await pool.query(

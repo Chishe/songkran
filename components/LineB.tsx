@@ -126,7 +126,6 @@ export default function Line({ url }: { url: string }) {
   
   
   const stepSize = getStepSize();
-
   const options = {
     responsive: true,
     plugins: {
@@ -143,11 +142,13 @@ export default function Line({ url }: { url: string }) {
     },
     scales: {
       y: {
-        min: minThreshold,
-        max: maxThreshold,
+        min: minThreshold ?? 0, 
+        max: maxThreshold ?? 1, 
         ticks: {
           stepSize: stepSize,
-          callback: (value: number) => value.toFixed(2),
+          callback: function (value: string | number) {
+            return typeof value === 'number' ? value.toFixed(2) : value;
+          },
           color: 'white'
         },
         grid: { color: 'white' }
@@ -159,6 +160,7 @@ export default function Line({ url }: { url: string }) {
     },
     maintainAspectRatio: false
   };
+  
 
   return (
     <div style={{ height: '100%', width: '100%' }}>

@@ -41,7 +41,7 @@ export default function Documentrecord() {
           <span className="ml-1 font-bold text-lg">Back</span>
         </Link>
         <Link
-          href="/document-record-2"
+          href="/document-record-3"
           className="inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50"
         >
           <span className="mr-1 font-bold text-lg">Next</span>

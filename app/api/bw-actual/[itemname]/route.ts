@@ -1,12 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { pool } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server'
+import { pool } from '@/lib/db'
 
 export async function GET(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  { params }: { params: Promise<Record<string, string>> } 
 ) {
-  const itemname = decodeURIComponent(context.params.itemname);
-  console.log('Requesting status for:', itemname);
+
+  const { itemname } = await params;
+
+  const decodedItemname = decodeURIComponent(itemname);
+  console.log('Requesting status for:', decodedItemname);
 
   try {
     const result = await pool.query(
@@ -33,17 +36,17 @@ export async function GET(
         n.id DESC
       LIMIT 1;
       `,
-      [itemname]
+      [decodedItemname]
     );
 
     if (result.rows.length === 0) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });
     }
 
-    const { needle, min, max, status } = result.rows[0];
+    const { item: needle, min, max, status } = result.rows[0];
 
     return NextResponse.json({
-      itemname,
+      itemname: decodedItemname,
       needle,
       min,
       max,

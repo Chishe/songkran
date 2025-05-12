@@ -1,65 +1,66 @@
-
 import { NextRequest } from "next/server";
-
-const groupedItems: Record<string, string[]> = {
-    "1-101": ["Heatingx zone 1",
-        "Heatingx zone 2",
-        "Heatingx zone 3",
-        "Heatingx zone 4",
-        "Keepingx Zone",
-        "Exit Zone"
-    ]
-};
-
-function findMinMax(itemname: string): [number, number] | null {
-    for (const [rangeKey, itemList] of Object.entries(groupedItems)) {
-        if (itemList.includes(itemname)) {
-            const [min, max] = rangeKey.split("-").map(Number);
-            return [min, max];
-        }
-    }
-    return null;
-}
-
-function getRandomInRange(min: number, max: number): number {
-    return Math.random() * (max - min) + min;
-}
+import { pool } from "@/lib/db";
 
 export async function GET(
-    req: NextRequest,
-    { params }: { params: { itemname: string } }
+  req: NextRequest,
+  context: { params: Promise<Record<string, string>> }
 ) {
-    const decodedItemname = decodeURIComponent(params.itemname);
+  const { itemname } = await context.params;
+  const decodedItemname = decodeURIComponent(itemname);
 
-    try {
-        const minMax = findMinMax(decodedItemname);
 
-        if (!minMax) {
-            return new Response(JSON.stringify({ error: "Item not found" }), {
-                status: 404,
-                headers: { "Content-Type": "application/json" },
-            });
-        }
+  try {
+    const result = await pool.query(
+      `
+        SELECT 
+          t.item, 
+          t.created_at, 
+          th.min, 
+          th.max, 
+          tl.item AS latest_value
+        FROM 
+          threshold th
+        LEFT JOIN 
+          o2_bf_line tl ON th.item = tl.itemname
+        LEFT JOIN 
+          o2_b t ON th.item = t.item
+        WHERE 
+          th.item = $1
+        ORDER BY 
+          tl.created_at DESC 
+        LIMIT 1
+      `,
+      [decodedItemname]
+    );
 
-        const [min, max] = minMax;
-
-        const responseData = {
-            needle: Number(getRandomInRange(min, max).toFixed(2)),
-            actual: [min, max],
-            rang: [min - 1, max + 1],
-            color: "#ffc000",
-            created: "2025-04-23T07:59:42.430Z",
-        };
-
-        return new Response(JSON.stringify(responseData), {
-            status: 200,
-            headers: { "Content-Type": "application/json" },
-        });
-    } catch (err) {
-        console.error("API Error:", err);
-        return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+    if (result.rows.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Item not found or no data available" }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
     }
+
+    const { min, max, latest_value } = result.rows[0];
+
+    const needle = latest_value || ((min + max) / 2);
+
+    const responseData = {
+      needle,
+      actual: [min, max],
+      rang: [min - 10, max + 10],
+      color: "#ffc000",
+      created: new Date().toISOString(),
+    };
+
+    return new Response(JSON.stringify(responseData), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    console.error("API Error:", err);
+    return new Response(
+      JSON.stringify({ error: "Internal Server Error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }

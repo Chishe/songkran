@@ -2,9 +2,10 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { itemname: string } }
+  context: { params: Promise<Record<string, string>> }
 ) {
-  const decodedItemname = decodeURIComponent(params.itemname);
+  const { itemname } = await context.params;
+  const decodedItemname = decodeURIComponent(itemname);
 
   try {
     const responseData = {

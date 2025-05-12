@@ -25,10 +25,10 @@ function getRandomItemValue(): number {
 }
 
 export async function GET(
-  _req: NextRequest,
-  { params }: { params: Params }
+  req: NextRequest,
+  { params }: { params: Promise<Record<string, string>> }
 ) {
-  const { item } = params;
+  const { item } = await params;
 
   if (!itemList.includes(item)) {
     return new Response(

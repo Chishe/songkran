@@ -3,10 +3,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaCircle } from 'react-icons/fa';
 
+// Define the type for the row data
+interface RowData {
+  date: string;
+  time: string;
+  item_name: string;
+  items: number[]; // Array of weights that this row contains
+}
+
 const WeightTable = () => {
   const weightValues = [200, 400, 800, 1100, 1600, 2200, 2800];
 
-  const [rowData, setRowData] = useState([]);
+  // Set rowData state to be of type RowData[]
+  const [rowData, setRowData] = useState<RowData[]>([]);
 
   useEffect(() => {
     axios.get('/api/weights')

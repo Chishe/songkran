@@ -3,10 +3,11 @@ import { pool } from '@/lib/db';
 
 export async function GET(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  { params }: { params: Promise<Record<string, string>> }
 ) {
-  const itemname = decodeURIComponent(context.params.itemname);
-  console.log('Requesting status for:', itemname);
+  // ต้องรอให้ params เป็น Promise เสร็จ
+  const { itemname } = await params; // ใช้ await params แทน context.params
+  const decodedItemname = decodeURIComponent(itemname);
 
   try {
     const result = await pool.query(
@@ -33,17 +34,17 @@ export async function GET(
         n.id DESC
       LIMIT 1;
       `,
-      [itemname]
+      [decodedItemname]
     );
 
     if (result.rows.length === 0) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });
     }
 
-    const { needle, min, max, status } = result.rows[0];
+    const { item: needle, min, max, status } = result.rows[0];
 
     return NextResponse.json({
-      itemname,
+      itemname: decodedItemname, // ใช้ decodedItemname ที่แปลงแล้ว
       needle,
       min,
       max,

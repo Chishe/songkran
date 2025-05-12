@@ -13,7 +13,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
-
+import { ChartOptions } from 'chart.js';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -144,8 +144,7 @@ export default function Line({ url }: { url: string }) {
   };
 
   const stepSize = getStepSize();
-
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -165,7 +164,13 @@ export default function Line({ url }: { url: string }) {
         max: adjustedMaxThreshold !== null ? adjustedMaxThreshold : 100,
         ticks: {
           stepSize: stepSize,
-          callback: (value: number) => value.toFixed(2),
+          callback: (tickValue: string | number) => {
+            // ตรวจสอบว่าค่าคือ number หรือไม่
+            if (typeof tickValue === 'number') {
+              return tickValue.toFixed(2);
+            }
+            return tickValue; // ถ้าเป็น string ก็คืนค่าเป็น string ตามเดิม
+          },
           color: 'white'
         },
         grid: { color: 'white' }
@@ -177,6 +182,8 @@ export default function Line({ url }: { url: string }) {
     },
     maintainAspectRatio: false
   };
+  
+  
 
   return (
     <div style={{ height: '100%', width: '100%' }}>

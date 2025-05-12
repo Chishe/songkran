@@ -1,62 +1,34 @@
-import { NextRequest } from "next/server";
+import { pool } from '@/lib/db';
+import { NextRequest } from 'next/server';
 
 interface Params {
   item: string;
 }
 
-const ranges: Record<string, string[]> = {
-  "1-101": ["Heatingx zone 1",
-    "Heatingx zone 2",
-    "Heatingx zone 3",
-    "Heatingx zone 4",
-    "Keepingx Zone",
-    "Exit Zone"
-]
-};
-// ฟังก์ชันสุ่มค่าในช่วงที่กำหนด
-function getRandomInRange(min: number, max: number) {
-  return Math.round(Math.random() * (max - min) + min);
-}
-
-// ค้นหาขอบเขตของค่า item ที่ได้รับ
-function findMinMax(itemname: string): [number, number] | null {
-  for (const rangeKey in ranges) {
-    if (ranges[rangeKey].includes(itemname)) {
-      const [minStr, maxStr] = rangeKey.split("-");
-      const min = parseFloat(minStr);
-      const max = parseFloat(maxStr);
-      return [Math.min(min, max), Math.max(min, max)];
-    }
-  }
-  return null;
-}
-
-function generateFixedTimes(): string[] {
-  return [
-    "14:30", "13:54", "13:06", "12:18", "11:30",
-    "10:42", "09:54", "09:06", "08:18", "07:30"
-  ];
-}
-
-
 export async function GET(
-  _req: NextRequest,
-  { params }: { params: Params }
-) {
-  const { item } = params;
-  const minMax = findMinMax(item);
+  req: NextRequest,
+  { params }: { params: Promise<Record<string, string>> }) {
+  const { item } = await params;
+  const query = `
+  SELECT itemname, item, time
+  FROM o2_bf_line
+  WHERE itemname = $1
+  ORDER BY created_at DESC
+  LIMIT 10;
+`;
 
-  if (!minMax) {
-    return new Response(JSON.stringify({ error: "Item not found" }), { status: 404 });
+  try {
+    const result = await pool.query(query, [item]);
+    const data = result.rows;
+
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error querying the database:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch data from the database" }), {
+      status: 500,
+    });
   }
-
-  const [min, max] = minMax;
-
-  const result = generateFixedTimes().map(time => ({
-    itemname: item,
-    time: time,
-    item: getRandomInRange(min, max),
-  }));
-
-  return new Response(JSON.stringify(result), { status: 200, headers: { "Content-Type": "application/json" } });
 }

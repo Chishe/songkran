@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { Line as ChartLine } from 'react-chartjs-2';
 import {
@@ -44,37 +42,36 @@ export default function Line({ url }: { url: string }) {
         const currentItem = reversed[0]?.itemname || '';
         setItemName(currentItem);
         fetch('/api/api-qty-suf')
-        .then(res => res.json())
-        .then(thresholds => {
-          const threshold = thresholds.find(
-            (t: any) => t.item.trim().toLowerCase() === currentItem.trim().toLowerCase()
-          );
-          if (threshold) {
-            setPointColor(threshold.color);
-            setMinThreshold(threshold.min);
-            setMaxThreshold(threshold.max);
-            console.log('Min Threshold:', threshold.min);
-            console.log('Max Threshold:', threshold.max);
-          } else {
-            console.warn('Threshold not found for:', currentItem);
-          }
-        })
-        .catch(err => {
-          console.error('Failed to fetch thresholds:', err);
-        });
+          .then(res => res.json())
+          .then(thresholds => {
+            const threshold = thresholds.find(
+              (t: any) => t.item.trim().toLowerCase() === currentItem.trim().toLowerCase()
+            );
+            if (threshold) {
+              setPointColor(threshold.color);
+              setMinThreshold(threshold.min);
+              setMaxThreshold(threshold.max);
+              console.log('Min Threshold:', threshold.min);
+              console.log('Max Threshold:', threshold.max);
+            } else {
+              console.warn('Threshold not found for:', currentItem);
+            }
+          })
+          .catch(err => {
+            console.error('Failed to fetch thresholds:', err);
+          });
       })
       .catch(err => {
         console.error('Failed to fetch data:', err);
       });
   }, [url]);
-  
 
   const pointCount = timeStamps.length;
 
   const labels = pointCount === 1
     ? [timeStamps[0], timeStamps[0] + ' ']
     : timeStamps;
-  
+
   const data = {
     labels,
     datasets: [
@@ -116,16 +113,16 @@ export default function Line({ url }: { url: string }) {
         : [])
     ]
   };
+
   const getStepSize = () => {
     if (minThreshold !== null && maxThreshold !== null) {
       const range = maxThreshold - minThreshold;
       const stepSize = range / 6;
       return stepSize;
     }
+    return 1; // default step size if thresholds are not available
   };
-  
-  
-  
+
   const stepSize = getStepSize();
 
   const options = {
@@ -144,11 +141,17 @@ export default function Line({ url }: { url: string }) {
     },
     scales: {
       y: {
-        min: minThreshold,
-        max: maxThreshold,
+        // Make sure min and max are numbers, provide a fallback if null
+        min: minThreshold ?? 0,
+        max: maxThreshold ?? 100,
         ticks: {
           stepSize: stepSize,
-          callback: (value: number) => value.toFixed(2),
+          callback: (value: string | number) => {
+            if (typeof value === 'number') {
+              return value.toFixed(2);
+            }
+            return value; // If string, return it as-is
+          },
           color: 'white'
         },
         grid: { color: 'white' }

@@ -21,13 +21,17 @@ SELECT
   th.min,
   th.max,
   lv.value,
-  lv.time,
-  'NG' AS status
+  to_char(lv.time, 'YYYY-MM-DD') AS date,
+  to_char(lv.time, 'HH24:MI:SS.MS') AS time,
+  CASE
+    WHEN t.item = 'After Burner' THEN 'NG'  -- ตรวจสอบเงื่อนไข item = 'After Burner'
+    WHEN lv.value < th.min OR lv.value > th.max THEN 'NG'
+    ELSE 'OK'
+  END AS status
 FROM temp t
 LEFT JOIN threshold th ON t.item = th.item
 LEFT JOIN latest_values lv ON t.item = lv.itemname
-WHERE lv.value < th.min OR lv.value > th.max
-ORDER BY t.id ASC;
+ORDER BY t.id DESC;
 
     `;
 

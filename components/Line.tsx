@@ -11,7 +11,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  ChartOptions
 } from 'chart.js';
 
 ChartJS.register(
@@ -34,7 +35,11 @@ const colorMap: { [key: string]: string } = {
   'Tension adjust press': '#ffffcc'
 };
 
-export default function Line({ url }: { url: string }) {
+interface LineProps {
+  url: string;
+}
+
+export default function Line({ url }: LineProps) {
   const [itemValues, setItemValues] = useState<number[]>([]);
   const [timeStamps, setTimeStamps] = useState<string[]>([]);
   const [itemName, setItemName] = useState<string>('');
@@ -89,7 +94,7 @@ export default function Line({ url }: { url: string }) {
     ]
   };
 
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -109,7 +114,9 @@ export default function Line({ url }: { url: string }) {
         max: 0.3,
         ticks: {
           stepSize: 0.02,
-          callback: (value: number) => value.toFixed(2),
+          callback: function (tickValue: string | number) {
+            return typeof tickValue === 'number' ? tickValue.toFixed(2) : tickValue;
+          },
           color: 'white'
         },
         grid: { color: 'white' }

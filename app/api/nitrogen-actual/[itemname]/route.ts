@@ -3,10 +3,11 @@ import { pool } from '@/lib/db';
 
 export async function GET(
   req: NextRequest,
-  context: { params: Record<string, string> }
+  context: { params: Promise<Record<string, string>> }
 ) {
-  const itemname = decodeURIComponent(context.params.itemname);
-  console.log('Requesting status for:', itemname);
+  const { itemname } = await context.params;
+  const decodedItemname = decodeURIComponent(itemname);
+
 
   try {
     const result = await pool.query(
@@ -33,7 +34,7 @@ export async function GET(
         n.id DESC
       LIMIT 1;
       `,
-      [itemname]
+      [decodedItemname]
     );
 
     if (result.rows.length === 0) {

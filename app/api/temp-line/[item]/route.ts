@@ -5,8 +5,10 @@ interface Params {
   item: string;
 }
 
-export async function GET(_req: NextRequest, { params }: { params: { item: string } }) {
-  const { item } = params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<Record<string, string>> }) {
+  const { item } = await params;
   const query = `
   SELECT itemname, item, time
   FROM temp_line
@@ -15,18 +17,18 @@ export async function GET(_req: NextRequest, { params }: { params: { item: strin
   LIMIT 10;
 `;
 
-try {
-  const result = await pool.query(query, [item]);
-  const data = result.rows;
+  try {
+    const result = await pool.query(query, [item]);
+    const data = result.rows;
 
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: { "Content-Type": "application/json" },
-  });
-} catch (error) {
-  console.error("Error querying the database:", error);
-  return new Response(JSON.stringify({ error: "Failed to fetch data from the database" }), {
-    status: 500,
-  });
-}
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error("Error querying the database:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch data from the database" }), {
+      status: 500,
+    });
+  }
 }

@@ -1,54 +1,48 @@
 import { NextRequest } from "next/server";
-
-const groupedItems: Record<string, string[]> = {
-  "59-61": ["Degreasings Zone 1", "Degreasings Zone 2", "Degreasings Zone 3"],
-  "55-60": ["Debinders Zone 1"],
-  "20-25": ["Debinders Zone 2"],
-  "15-20": ["Debinders Zone 3"],
-  "23-28": ["Heating zone 1"],
-  "40-45": ["Heating zone 2", "Heating zone 3"],
-  "54-60": ["Heating zone 4"]
-};
-function findMinMax(itemname: string): [number, number] | null {
-  for (const [rangeKey, itemList] of Object.entries(groupedItems)) {
-    if (itemList.includes(itemname)) {
-      const [min, max] = rangeKey.split("-").map(Number);
-      return [min, max];
-    }
-  }
-  return null;
-}
-
-function getRandomInRange(min: number, max: number): number {
-  return Math.random() * (max - min) + min;
-}
+import { pool } from "@/lib/db";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { itemname: string } }
+  context: { params: Promise<Record<string, string>> }
 ) {
-  const decodedItemname = decodeURIComponent(params.itemname);
+  const { itemname } = await context.params;
+  const decodedItemname = decodeURIComponent(itemname);
+
 
   try {
-    const minMax = findMinMax(decodedItemname);
+    const result = await pool.query(
+      `
+        SELECT 
+          t.item, 
+          t.created_at, 
+          th.min, 
+          th.max, 
+          tl.item AS latest_value
+        FROM 
+          threshold th
+        LEFT JOIN 
+          rc_fan_line tl ON th.item = tl.itemname
+        LEFT JOIN 
+          rc_fan t ON th.item = t.item
+        WHERE 
+          th.item = $1
+        ORDER BY 
+          tl.created_at DESC 
+        LIMIT 1
+      `,
+      [decodedItemname]
+    );
 
-    if (!minMax) {
-      return new Response(JSON.stringify({ error: "Item not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
+    if (result.rows.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Item not found or no data available" }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
     }
 
-    const [min, max] = minMax;
+    const { min, max, latest_value } = result.rows[0];
 
-    let needle: number;
-    if (decodedItemname === "After Burner") {
-      needle = 560;
-    } else if (decodedItemname === "Degreasing zone 1") {
-      needle = 270;
-    } else {
-      needle = Number(((min + max) / 2).toFixed(2));
-    }
+    const needle = latest_value || ((min + max) / 2);
 
     const responseData = {
       needle,
@@ -64,9 +58,9 @@ export async function GET(
     });
   } catch (err) {
     console.error("API Error:", err);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Internal Server Error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

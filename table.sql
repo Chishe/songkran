@@ -206,13 +206,13 @@ VALUES
   ('Keeping zone', 0.26, '11.01'),
   ('Exit Zone', 0.26, '11.01');
 
-  CREATE TABLE bz_temp (
+  CREATE TABLE temp (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_temp (item)
+INSERT INTO temp (item)
 VALUES ('After Burner'),
 ('Degreasing Zone 1'),
 ('Degreasing Zone 2'),
@@ -233,13 +233,13 @@ VALUES ('After Burner'),
 ('Exit Chamber'),
 ('Conveyer Speed (mm/min)');
 
-  CREATE TABLE bz_rc_fan (
+  CREATE TABLE rc_fan (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_rc_fan (item)
+INSERT INTO rc_fan (item)
 VALUES ('After Burner'),
 ('Degreasing Zone 1'),
 ('Degreasing Zone 2'),
@@ -252,26 +252,26 @@ VALUES ('After Burner'),
 ('Heating zone 3'),
 ('Heating zone 4');
 
-  CREATE TABLE bz_ex_fan (
+  CREATE TABLE ex_fan (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_ex_fan (item)
+INSERT INTO ex_fan (item)
 VALUES
 ('Blast Cooling 1'),
 ('Blast Cooling 2'),
 ('Blast Cooling 3');
 
 
-  CREATE TABLE bz_bw_fan (
+  CREATE TABLE bw_fan (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_bw_fan (item)
+INSERT INTO bw_fan (item)
 VALUES 
 ('Blast Cooling Right Front 1'),
 ('Blast Cooling Left Front 1'),
@@ -286,13 +286,13 @@ VALUES
 ('Blast Cooling Right Rear 3'),
 ('Blast Cooling Left Rear 3');
 
-  CREATE TABLE bz_nitrogen (
+  CREATE TABLE nitrogen (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_nitrogen (item)
+INSERT INTO nitrogen (item)
 VALUES 
 ('Front Chamber (Entrance)'),
 ('Front Chamber (Exit)'),
@@ -300,13 +300,13 @@ VALUES
 ('Heating Zone 3,4'),
 ('Keeping Zone');
 
-  CREATE TABLE bz_o2_b (
+  CREATE TABLE o2_b (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_o2_b (item)
+INSERT INTO o2_b (item)
 VALUES 
 ('Heating zone 1'),
 ('Heating zone 2'),
@@ -315,13 +315,13 @@ VALUES
 ('Keeping Zone'),
 ('Exit Zone');
 
-  CREATE TABLE bz_o2_a (
+  CREATE TABLE o2_a (
   id SERIAL PRIMARY KEY,
   item TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO bz_o2_a (item)
+INSERT INTO o2_a (item)
 VALUES 
 ('Heating zone 1'),
 ('Heating zone 2'),
